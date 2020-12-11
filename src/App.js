@@ -7,6 +7,7 @@ import Splash from './pages/Splash';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Private from './pages/Private';
+import ClassDetail from './pages/ClassDetail';
 
 import AnonRoute from './components/AnonRoute';
 import PrivateRoute from './components/PrivateRoute';
@@ -27,7 +28,9 @@ class App extends Component {
           <AnonRoute exact path="/login" component={Login} />
 
           <PrivateRoute exact path="/private" component={Private} />
+          <Route exact path="/classes/:class_id" component={ClassDetail} />
         </Switch>
+
       </div>
     );
   }
