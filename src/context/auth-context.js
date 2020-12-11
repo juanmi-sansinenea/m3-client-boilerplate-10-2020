@@ -33,7 +33,9 @@ class AuthProvider extends React.Component {
 
   login = (username, password) => {
     authService.login( username, password )
-      .then((user) => this.setState({ isLoggedIn: true, user }))
+      .then((user) => this.setState({ isLoggedIn: true, user })) 
+      // as state changes, now App.js will react automatically and redirect to classes, 
+      //because the Anon route wrapping Login is configured like that
       .catch((err) => {
         this.setState({ isLoggedIn: false, user: null });
       })

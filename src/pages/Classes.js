@@ -15,10 +15,10 @@ export class Classes extends Component {
         {classesArr.map((
           oneClass //   <-- ADD
         ) => (
-          <Link to={`/classes/${oneClass._id}`}>
-            <div key={oneClass._id} className="oneClass">
-              <h3>{oneClass.classType}</h3>
-              <p>{oneClass.duration} </p>
+          <Link key={oneClass._id} to={`/classes/${oneClass._id}`}>
+            <div className="oneClass">
+              <h3>{oneClass.scheduled} | {oneClass.classType}</h3>
+              <p>{oneClass.instructor.username} | {oneClass.duration} min </p>
             </div>
           </Link>
         ))}

@@ -21,7 +21,7 @@ function AnonRoute (routeProps) {
       path={path}
       render={
         function(props) {
-          if (isLoggedIn) return <Redirect to="/private" />
+          if (isLoggedIn) return <Redirect to="/classes" />//<-- the moment isLoggedIn becomes true, it reacts and redirects to classes
           else if (! isLoggedIn) return <ComponentToShow {...props} />
         }
       }
