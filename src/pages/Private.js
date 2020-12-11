@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withAuth } from './../context/auth-context';
+import {Classes} from './Classes'
 
 class Private extends Component {
   render() {
@@ -10,6 +11,7 @@ class Private extends Component {
         {/* 
         <h2>Welcome {this.props.user ? this.props.user.username : null }</h2> 
         */}
+        <Classes />
 
       </div>
     );
