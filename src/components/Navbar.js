@@ -4,16 +4,17 @@ import { withAuth } from './../context/auth-context';
 
 class Navbar extends Component {
   render() {
-    // const { user, logout, isLoggedin } = this.props;
+    const { user, logout, isLoggedIn } = this.props;
+    user && console.log('user.username, isLoggedIn :>> ', user.username, isLoggedIn);
     return (
       <nav className="navbar">
         <Link to={'/'} id='home-btn'>
           <h4>Home</h4>
         </Link>
-        {this.props.isLoggedIn ? (
+        {isLoggedIn ? (
           <>
-            <p>username: {this.props.user && this.props.user.username}</p>
-            <button onClick={this.props.logout}>Logout</button>
+            <p>username: {user && user.username}</p>
+            <button onClick={logout}>Logout</button>
           </>
         ) : (
           <>

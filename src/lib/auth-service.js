@@ -27,7 +27,7 @@ class AuthService {
 
   logout() {
     const pr = this.auth
-      .get("/auth/logout")
+      .post("/auth/logout")  /// <--- GET ??? shoudn't be POST ???
       .then((response) => response.data);
 
     return pr;
