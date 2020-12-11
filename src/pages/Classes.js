@@ -7,6 +7,7 @@ export class Classes extends Component {
   state = {
     classesArr: [],
   };
+  
   render() {
     const { classesArr } = this.state;
     return (

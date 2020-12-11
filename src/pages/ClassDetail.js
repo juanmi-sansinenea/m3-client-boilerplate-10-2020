@@ -3,29 +3,36 @@ import axios from "axios";
 
 export class ClassDetail extends Component {
     state = {
-        classType: " ",
-        duration: " ",
+        classType: "",
+        instructorName: "",
+        duration: "",
+        scheduled: "",
         comments: [],
       };
     render() {
         return (
             <div>
                <h1>Class Detail</h1>
+               <p>{this.state.classType} </p>
+               <p>{this.state.instructorName} </p>
+               <p>{this.state.duration} </p>
+               <p>{this.state.scheduled} </p>
+               <p>{this.state.comments} </p>
             </div>
         )
     }
     componentDidMount() {
-        console.log("got this far")
-        //this.getClassDetails();
+        this.getClassDetails();
     }
     getClassDetails = () => {
-        const { id } = this.props.match.params;
+        const { class_id } = this.props.match.params;
         axios
-          .get(`http://localhost:5000/api/projects/${id}`)
+          .get(`http://localhost:5000/api/classes/${class_id}`)
           .then((apiResponse) => {
             const theClass = apiResponse.data;
-            const { classType, duration, comments } = theClass;
-            this.setState({ classType, duration, comments });
+            const { classType, duration, scheduled, comments } = theClass;
+            const instructorName = theClass.instructor.username;
+            this.setState({ classType, instructorName, duration, scheduled, comments });
           })
           .catch((err) => console.log(err));
       };
