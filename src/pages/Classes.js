@@ -13,6 +13,7 @@ export class Classes extends Component {
     filterToolIsOn: false,
     classTypesArr: ["HIIT", "Strength", "Dance", "Yoga", "Pilates", "Spinning"],
     instructorsArr: [],
+    durationsArr: [],
   };
 
   render() {
@@ -26,6 +27,8 @@ export class Classes extends Component {
             <FilterSelector arr={this.state.classTypesArr} text="Class type" />
 
             <FilterSelector arr={this.state.instructorsArr} text="Instructor" />
+
+            <FilterSelector arr={this.state.durationsArr} text="Duration" />
 
             
           </div>
@@ -67,6 +70,14 @@ export class Classes extends Component {
       const instructorsUnique = instructorsAll.filter(onlyUnique);
       this.setState({
         instructorsArr: instructorsUnique
+      });
+      // set durations array
+      const durationsAll = this.state.classesArr.map((oneClass) => {
+        return oneClass.duration;
+      })
+      const durationsUnique = durationsAll.filter(onlyUnique);
+      this.setState({
+        durationsArr: durationsUnique
       });
       
     });
