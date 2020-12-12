@@ -15,7 +15,7 @@ class FilterSelector extends Component {
         </div>
 
         {this.state.expanded === true
-          ? this.props.arr.map((oneCT) => <div key={oneCT}>{oneCT}</div>)
+          ? this.props.arr.map((el) => <div key={el}>{el}</div>)
           : null}
       </div>
     );

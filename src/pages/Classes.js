@@ -5,11 +5,14 @@ import { Link } from "react-router-dom";
 import "./Classes.css";
 import FilterSelector from "./../components/FilterSelector";
 
+const onlyUnique = require('./../utils/utils.js').onlyUnique;
+
 export class Classes extends Component {
   state = {
     classesArr: [],
     filterToolIsOn: false,
     classTypesArr: ["HIIT", "Strength", "Dance", "Yoga", "Pilates", "Spinning"],
+    instructorsArr: [],
   };
 
   render() {
@@ -19,19 +22,12 @@ export class Classes extends Component {
         {this.state.filterToolIsOn && (
           <div className="filter-tool">
             <h2>Filter results </h2>
-            
+
             <FilterSelector arr={this.state.classTypesArr} text="Class type" />
+
+            <FilterSelector arr={this.state.instructorsArr} text="Instructor" />
+
             
-            <div className="selector">
-              <button onClick={() => this.setState({ filterToolIsOn: false })}>
-                Instructor
-              </button>
-            </div>
-            <div className="selector">
-              <button onClick={() => this.setState({ filterToolIsOn: false })}>
-                Class duration
-              </button>
-            </div>
           </div>
         )}
 
@@ -62,7 +58,17 @@ export class Classes extends Component {
   }
   getAllClasses = () => {
     axios.get("http://localhost:5000/api/classes").then((apiResponse) => {
+      // set classes array
       this.setState({ classesArr: apiResponse.data });
+      // set instructors array
+      const instructorsAll = this.state.classesArr.map((oneClass) => {
+        return oneClass.instructor.username;
+      })
+      const instructorsUnique = instructorsAll.filter(onlyUnique);
+      this.setState({
+        instructorsArr: instructorsUnique
+      });
+      
     });
   };
 }
