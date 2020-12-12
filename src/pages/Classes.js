@@ -26,13 +26,21 @@ export class Classes extends Component {
 
             <FilterSelector
               arr={this.state.classTypesArr}
-              filterResults={this.filterResults}
+              filterResults={this.filterByClass}
               text="Class type"
             />
 
-            <FilterSelector arr={this.state.instructorsArr} text="Instructor" />
+            <FilterSelector
+              arr={this.state.instructorsArr}
+              filterResults={this.filterByInstructor}
+              text="Instructor"
+            />
 
-            <FilterSelector arr={this.state.durationsArr} text="Duration" />
+            <FilterSelector
+              arr={this.state.durationsArr}
+              filterResults={this.filterByDuration}
+              text="Duration"
+            />
 
             {
               // See results button
@@ -99,10 +107,12 @@ export class Classes extends Component {
     });
   };
 
-  filterResults = () => {
+  filterByClass = (props) => {
+    console.log(props)
     const myClassesArr = this.state.classesArr;
-    const filteredArr = myClassesArr.filter((oneClass) =>  oneClass.classType === "Pilates");
-   
+    const filteredArr = myClassesArr.filter(
+      (oneClass) => oneClass.classType === props
+    );
     this.setState({ classesArr: filteredArr });
   };
 }
