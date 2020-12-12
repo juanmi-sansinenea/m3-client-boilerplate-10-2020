@@ -19,7 +19,8 @@ export class Classes extends Component {
       classType: "",
       instructor: "",
       duration: "",
-    }
+    },
+    totalActiveFilters: 0
   };
 
   render() {
@@ -28,7 +29,7 @@ export class Classes extends Component {
       <div>
         {this.state.filterToolIsOn && (
           <div className="filter-tool">
-            <h2>Filter results </h2>
+            <h2>Filter results</h2>
 
             <FilterSelector
               arr={this.state.classTypesArr}
@@ -53,9 +54,12 @@ export class Classes extends Component {
               // See results button
               <div className="button">
                 <button
-                  onClick={() => this.setState({ filterToolIsOn: false })}
+                  onClick={(() => {
+                    this.setState({ filterToolIsOn: false })
+                    this.calculateTotalActiveFilters()
+                  })}
                 >
-                  See results
+                  See {classesArr.length} results
                 </button>
               </div>
             }
@@ -66,7 +70,7 @@ export class Classes extends Component {
           // Filter button
           <div className="button">
             <button onClick={() => this.setState({ filterToolIsOn: true })}>
-              Filter
+              Filter ({this.state.totalActiveFilters})
             </button>
           </div>
         }
@@ -123,6 +127,7 @@ export class Classes extends Component {
     const filteredArr = myClassesArr.filter(
       (oneClass) => oneClass.classType === props
     );
+    // and update the array to be filtered by props
     this.setState({ classesArr: filteredArr });
     // and update the centralised state of selected filters
     const myFilterCriteria = {...this.state.filterCriteria}
@@ -132,8 +137,39 @@ export class Classes extends Component {
     console.log('myFilterCriteria.classType assigned to props:>> ', myFilterCriteria);
     
     this.setState({ filterCriteria: myFilterCriteria });
-    console.log('this.state.filterCriteria :>> ', this.state.filterCriteria);
+    //console.log('this.state.filterCriteria :>> ', this.state.filterCriteria);
+
+    this.calculateTotalActiveFilters()
   };
+
+  calculateTotalActiveFilters = () => {
+    let f1;
+    let f2;
+    let f3;
+    if (this.state.filterCriteria.classType || "") {
+      f1 = 1;
+    } else {
+      f1 = 0;
+    }
+    if (this.state.filterCriteria.instructor || "") {
+      f2 = 1
+    } else {
+      f2 = 0
+    }
+    if (this.state.filterCriteria.duration || "") {
+      f3 = 1
+    } else {
+      f3 = 0
+    }
+    console.log('f1 :>> ', f1, this.state.filterCriteria.classType);
+    console.log('f2 :>> ', f2, this.state.filterCriteria.instructor);
+    console.log('f3 :>> ', f3, this.state.filterCriteria.duration);
+    let total = f1 + f2 + f3;
+    this.setState({totalActiveFilters: total})
+    
+    
+
+  }
 
 }
 
