@@ -23,7 +23,9 @@ class FilterSelector extends Component {
                 key={el}
                 onClick={() => {
                   this.setState({ selected: el });
-                  this.setState({ expanded: false })
+                  this.setState({ expanded: false });
+                  this.props.filterResults();
+                    
                 }}
               >
                 {el}

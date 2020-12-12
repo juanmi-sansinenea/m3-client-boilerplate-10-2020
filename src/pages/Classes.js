@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import "./Classes.css";
 import FilterSelector from "./../components/FilterSelector";
 
-const onlyUnique = require('./../utils/utils.js').onlyUnique;
+const onlyUnique = require("./../utils/utils.js").onlyUnique;
 
 export class Classes extends Component {
   state = {
@@ -24,23 +24,40 @@ export class Classes extends Component {
           <div className="filter-tool">
             <h2>Filter results </h2>
 
-            <FilterSelector arr={this.state.classTypesArr} text="Class type" />
+            <FilterSelector
+              arr={this.state.classTypesArr}
+              filterResults={this.filterResults}
+              text="Class type"
+            />
 
             <FilterSelector arr={this.state.instructorsArr} text="Instructor" />
 
             <FilterSelector arr={this.state.durationsArr} text="Duration" />
 
-            
+            {
+              // See results button
+              <div className="button">
+                <button
+                  onClick={() => this.setState({ filterToolIsOn: false })}
+                >
+                  See results
+                </button>
+              </div>
+            }
           </div>
         )}
 
-        <div className="button">
-          <button onClick={() => this.setState({ filterToolIsOn: true })}>
-            Filter
-          </button>
-        </div>
+        {
+          // Filter button
+          <div className="button">
+            <button onClick={() => this.setState({ filterToolIsOn: true })}>
+              Filter
+            </button>
+          </div>
+        }
 
         {classesArr.map((oneClass) => (
+          // Mapping of all classes list
           <Link key={oneClass._id} to={`/classes/${oneClass._id}`}>
             <div className="oneClass">
               <h3>
@@ -66,21 +83,27 @@ export class Classes extends Component {
       // set instructors array
       const instructorsAll = this.state.classesArr.map((oneClass) => {
         return oneClass.instructor.username;
-      })
+      });
       const instructorsUnique = instructorsAll.filter(onlyUnique);
       this.setState({
-        instructorsArr: instructorsUnique
+        instructorsArr: instructorsUnique,
       });
       // set durations array
       const durationsAll = this.state.classesArr.map((oneClass) => {
         return oneClass.duration;
-      })
+      });
       const durationsUnique = durationsAll.filter(onlyUnique);
       this.setState({
-        durationsArr: durationsUnique
+        durationsArr: durationsUnique,
       });
-      
     });
+  };
+
+  filterResults = () => {
+    const myClassesArr = this.state.classesArr;
+    const filteredArr = myClassesArr.filter((oneClass) =>  oneClass.classType === "Pilates");
+   
+    this.setState({ classesArr: filteredArr });
   };
 }
 
