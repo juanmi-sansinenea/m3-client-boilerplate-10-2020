@@ -4,7 +4,7 @@ import "./FilterSelector.css";
 class FilterSelector extends Component {
   state = {
     expanded: false,
-    selected: "",
+    selectedValue: "",
   };
   render() {
     return (
@@ -13,7 +13,7 @@ class FilterSelector extends Component {
           <button
             onClick={() => this.setState({ expanded: !this.state.expanded })}
           >
-            {this.props.text} {this.state.selected}
+            {this.props.text} {this.state.selectedValue}
           </button>
         </div>
 
@@ -22,17 +22,13 @@ class FilterSelector extends Component {
               <div
                 key={el}
                 onClick={() => {
-                  
-                  this.setState({ expanded: false })
-                  this.setState({ selected: el })
-                  this.props.filterResults(el) 
-                  // This function comes passed as props 
-                  // and sends back 'el' as props of its own: the filtering criterion
+                  this.setState({ expanded: false });
+                  this.setState({ selectedValue: el });
+                  // reset filter array to floor, to filter freshly over all results
+                  this.props.filterResults(el);
+                  // The above function comes passed as props
+                  // and sends back 'el' as props of its own: the a value to filter with, i.e., Mafe, or HIIT
                   // which will be ran by the three filters
-                  
-                  
-                  
-                    
                 }}
               >
                 {el}
@@ -41,6 +37,10 @@ class FilterSelector extends Component {
           : null}
       </div>
     );
+  }
+  componentDidMount() {
+    // selectedValue can be Mafe, or HIIT, or Yoga...
+    this.setState({ selectedValue: this.props.filterValue });
   }
 }
 

@@ -10,10 +10,16 @@ const onlyUnique = require("./../utils/utils.js").onlyUnique;
 export class Classes extends Component {
   state = {
     classesArr: [],
+    classesArrFloor: [],
     filterToolIsOn: false,
     classTypesArr: ["HIIT", "Strength", "Dance", "Yoga", "Pilates", "Spinning"],
     instructorsArr: [],
     durationsArr: [],
+    filterCriteria: {
+      classType: "",
+      instructor: "",
+      duration: "",
+    }
   };
 
   render() {
@@ -28,6 +34,7 @@ export class Classes extends Component {
               arr={this.state.classTypesArr}
               filterResults={this.filterByClass}
               text="Class type"
+              filterValue={this.state.filterCriteria.classType}
             />
 
             <FilterSelector
@@ -86,8 +93,9 @@ export class Classes extends Component {
   }
   getAllClasses = () => {
     axios.get("http://localhost:5000/api/classes").then((apiResponse) => {
-      // set classes array
+      // set classes array, and the original copy 'floor' to be saved safe
       this.setState({ classesArr: apiResponse.data });
+      this.setState({ classesArrFloor: apiResponse.data })
       // set instructors array
       const instructorsAll = this.state.classesArr.map((oneClass) => {
         return oneClass.instructor.username;
@@ -108,13 +116,25 @@ export class Classes extends Component {
   };
 
   filterByClass = (props) => {
+    // props here gets a filtering value, such as HIIT or Ziggy22
     console.log(props)
-    const myClassesArr = this.state.classesArr;
+    // we create the filtered array
+    const myClassesArr = this.state.classesArrFloor; // <-- We filter over the untouched array 'Floor' !!
     const filteredArr = myClassesArr.filter(
       (oneClass) => oneClass.classType === props
     );
     this.setState({ classesArr: filteredArr });
+    // and update the centralised state of selected filters
+    const myFilterCriteria = {...this.state.filterCriteria}
+    console.log('myFilterCriteria before:>> ', myFilterCriteria);
+    
+    myFilterCriteria.classType = props;
+    console.log('myFilterCriteria.classType assigned to props:>> ', myFilterCriteria);
+    
+    this.setState({ filterCriteria: myFilterCriteria });
+    console.log('this.state.filterCriteria :>> ', this.state.filterCriteria);
   };
+
 }
 
 export default withAuth(Classes);
