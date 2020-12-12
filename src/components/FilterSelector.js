@@ -3,18 +3,18 @@ import "./FilterSelector.css";
 
 class FilterSelector extends Component {
   state = {
-    filter: "collapsed",
+    expanded: false,
   };
   render() {
     return (
       <div>
         <div className="selector">
-          <button onClick={() => this.setState({ filter: "expanded" })}>
+          <button onClick={() => this.setState({ expanded: !this.state.expanded })}>
             {this.props.text}
           </button>
         </div>
 
-        {this.state.filter === "expanded"
+        {this.state.expanded === true
           ? this.props.arr.map((oneCT) => <div key={oneCT}>{oneCT}</div>)
           : null}
       </div>
