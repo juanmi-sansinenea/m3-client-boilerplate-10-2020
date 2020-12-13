@@ -57,7 +57,7 @@ export class Classes extends Component {
                 <button
                   onClick={() => {
                     this.setState({ filterToolIsOn: false });
-                    this.updateBubble();
+                    
                   }}
                 >
                   See {this.state.classesArr.length} results
@@ -149,29 +149,43 @@ export class Classes extends Component {
     myfilter.instructor = props;
     this.setState({ filter: myfilter }, this.filterResults);
   };
+  updateFilter3 = (props) => {
+    const myfilter = { ...this.state.filter };
+    myfilter.duration = props;
+    this.setState({ filter: myfilter }, this.filterResults);
+  };
 
   filterResults = () => {
     console.log('this.state.filter :>> ', this.state.filter);
 
     let arrayToFilter = this.state.classesArrFloor;
+    let activeFilterCount = 0;
+    console.log('activeFilterCount :>> ', activeFilterCount);
 
     if (this.state.filter.classType || this.state.filter.classType !== "") {
+      activeFilterCount ++
       arrayToFilter = arrayToFilter.filter(
         (oneClass) => oneClass.classType === this.state.filter.classType
       );
     }
-    console.log('after 1st filt ', arrayToFilter);
     
     if (this.state.filter.instructor || this.state.filter.instructor !== "") {
+      activeFilterCount ++
       arrayToFilter = arrayToFilter.filter(
         (oneClass) =>
           oneClass.instructor.username === this.state.filter.instructor
       );
     }
 
-    console.log('after 2nd filt :>> ', arrayToFilter);
+    if (this.state.filter.duration || this.state.filter.duration !== "") {
+      activeFilterCount ++
+      arrayToFilter = arrayToFilter.filter(
+        (oneClass) =>
+          oneClass.duration === this.state.filter.duration
+      );
+    }
 
-    this.setState({ classesArr: arrayToFilter });
+    this.setState({ classesArr: arrayToFilter, activeFilterCount });
   };
 
 
