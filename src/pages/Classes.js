@@ -30,6 +30,18 @@ export class Classes extends Component {
           <div className="filter-tool">
             <h2>Filter results</h2>
 
+            <div
+              onClick={() => {
+                const myFilter = { ...this.state.filter };
+                myFilter.classType = "";
+                myFilter.instructor = "";
+                myFilter.duration = ""; 
+                this.setState({ filterToolIsOn: false, classesArr: this.state.classesArrFloor, filter: myFilter, activeFilterCount: 0 });
+              }}
+            >
+              X close
+            </div>
+
             <FilterSelector
               arr={this.state.classTypesArr}
               filterResults={this.updateFilter1}
@@ -57,7 +69,6 @@ export class Classes extends Component {
                 <button
                   onClick={() => {
                     this.setState({ filterToolIsOn: false });
-                    
                   }}
                 >
                   See {this.state.classesArr.length} results
@@ -116,6 +127,7 @@ export class Classes extends Component {
       classTypesArr: [
         ...(prevState.classTypesArr || []),
         classTypesUnique,
+        `none`,
       ].flat(),
     }));
     // set instructors array with instructor usernames
@@ -127,6 +139,7 @@ export class Classes extends Component {
       instructorsArr: [
         ...(prevState.instructorsArr || []),
         instructorsUnique,
+        `none`,
       ].flat(),
     }));
     // set durations array
@@ -135,42 +148,46 @@ export class Classes extends Component {
     });
     const durationsUnique = durationsAll.filter(onlyUnique);
     this.setState((prevState) => ({
-      durationsArr: [...(prevState.durationsArr || []), durationsUnique].flat(),
+      durationsArr: [
+        ...(prevState.durationsArr || []),
+        durationsUnique,
+        `none`,
+      ].flat(),
     }));
   };
 
   updateFilter1 = (props) => {
-    const myfilter = { ...this.state.filter };
-    myfilter.classType = props;
-    this.setState({ filter: myfilter }, this.filterResults);
+    const myFilter = { ...this.state.filter };
+    myFilter.classType = props;
+    this.setState({ filter: myFilter }, this.filterResults);
   };
   updateFilter2 = (props) => {
-    const myfilter = { ...this.state.filter };
-    myfilter.instructor = props;
-    this.setState({ filter: myfilter }, this.filterResults);
+    const myFilter = { ...this.state.filter };
+    myFilter.instructor = props;
+    this.setState({ filter: myFilter }, this.filterResults);
   };
   updateFilter3 = (props) => {
-    const myfilter = { ...this.state.filter };
-    myfilter.duration = props;
-    this.setState({ filter: myfilter }, this.filterResults);
+    const myFilter = { ...this.state.filter };
+    myFilter.duration = props;
+    this.setState({ filter: myFilter }, this.filterResults);
   };
 
   filterResults = () => {
-    console.log('this.state.filter :>> ', this.state.filter);
+    console.log("this.state.filter :>> ", this.state.filter);
 
     let arrayToFilter = this.state.classesArrFloor;
     let activeFilterCount = 0;
-    console.log('activeFilterCount :>> ', activeFilterCount);
+    console.log("activeFilterCount :>> ", activeFilterCount);
 
     if (this.state.filter.classType || this.state.filter.classType !== "") {
-      activeFilterCount ++
+      activeFilterCount++;
       arrayToFilter = arrayToFilter.filter(
         (oneClass) => oneClass.classType === this.state.filter.classType
       );
     }
-    
+
     if (this.state.filter.instructor || this.state.filter.instructor !== "") {
-      activeFilterCount ++
+      activeFilterCount++;
       arrayToFilter = arrayToFilter.filter(
         (oneClass) =>
           oneClass.instructor.username === this.state.filter.instructor
@@ -178,33 +195,13 @@ export class Classes extends Component {
     }
 
     if (this.state.filter.duration || this.state.filter.duration !== "") {
-      activeFilterCount ++
+      activeFilterCount++;
       arrayToFilter = arrayToFilter.filter(
-        (oneClass) =>
-          oneClass.duration === this.state.filter.duration
+        (oneClass) => oneClass.duration === this.state.filter.duration
       );
     }
 
     this.setState({ classesArr: arrayToFilter, activeFilterCount });
-  };
-
-
-
-
-
-  updateBubble = () => {
-    let f1;
-    let f2;
-    let f3;
-    this.state.filter.classType || ""
-      ? (f1 = 1)
-      : (f1 = 0)(this.state.filter.instructor || "")
-      ? (f2 = 1)
-      : (f2 = 0)(this.state.filter.duration || "")
-      ? (f3 = 1)
-      : (f3 = 0);
-    let total = f1 + f2 + f3;
-    this.setState({ activeFilterCount: total });
   };
 }
 
