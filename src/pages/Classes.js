@@ -32,21 +32,21 @@ export class Classes extends Component {
 
             <FilterSelector
               arr={this.state.classTypesArr}
-              filterResults={this.filterResults}
+              filterResults={this.updateFilter1}
               text="Class type"
               filterValue={this.state.filter.classType}
             />
 
             <FilterSelector
               arr={this.state.instructorsArr}
-              filterResults={this.filterResults}
+              filterResults={this.updateFilter2}
               text="Instructor"
               filterValue={this.state.filter.classType}
             />
 
             <FilterSelector
               arr={this.state.durationsArr}
-              filterResults={this.filterResults}
+              filterResults={this.updateFilter3}
               text="Duration"
               filterValue={this.state.filter.classType}
             />
@@ -97,8 +97,9 @@ export class Classes extends Component {
       .get("http://localhost:5000/api/classes")
       .then((apiResponse) => {
         // set classes array, and the original copy 'floor' to be saved safe
-        this.setState({ classesArr: apiResponse.data });
         // this.setState({ classesArrFloor: apiResponse.data });
+        this.setState({ classesArr: apiResponse.data });
+        this.setState({ classesArrFloor: apiResponse.data });
         this.fillStateArrays();
       })
       .catch((err) => console.log(err));
@@ -112,7 +113,10 @@ export class Classes extends Component {
     const classTypesUnique = classesTypesAll.filter(onlyUnique);
     //we assign the uniques array to the classTypesArr. Must spread inside and flatten (otherwise it's a different memory address...)
     this.setState((prevState) => ({
-      classTypesArr: [...(prevState.classTypesArr || []), classTypesUnique].flat()
+      classTypesArr: [
+        ...(prevState.classTypesArr || []),
+        classTypesUnique,
+      ].flat(),
     }));
     // set instructors array with instructor usernames
     const instructorsAll = this.state.classesArr.map((oneClass) => {
@@ -120,7 +124,10 @@ export class Classes extends Component {
     });
     const instructorsUnique = instructorsAll.filter(onlyUnique);
     this.setState((prevState) => ({
-      instructorsArr: [...(prevState.instructorsArr || []), instructorsUnique].flat()
+      instructorsArr: [
+        ...(prevState.instructorsArr || []),
+        instructorsUnique,
+      ].flat(),
     }));
     // set durations array
     const durationsAll = this.state.classesArr.map((oneClass) => {
@@ -128,14 +135,43 @@ export class Classes extends Component {
     });
     const durationsUnique = durationsAll.filter(onlyUnique);
     this.setState((prevState) => ({
-      durationsArr: [...(prevState.durationsArr || []), durationsUnique].flat()
+      durationsArr: [...(prevState.durationsArr || []), durationsUnique].flat(),
     }));
   };
 
-  filterResults = (props) => {
-  console.log('props :>> ', props);
-
+  updateFilter1 = (props) => {
+    const myfilter = { ...this.state.filter };
+    myfilter.classType = props;
+    this.setState({ filter: myfilter }, this.filterResults);
   };
+  updateFilter2 = (props) => {
+    const myfilter = { ...this.state.filter };
+    myfilter.instructor = props;
+    this.setState({ filter: myfilter }, this.filterResults);
+  };
+
+  filterResults = () => {
+    console.log('this.state.filter :>> ', this.state.filter);
+    let filteredArr;
+    if (this.state.filter.classType || this.state.filter.classType !== "") {
+      filteredArr = this.state.classesArr.filter(
+        (oneClass) => oneClass.classType === this.state.filter.classType
+      );
+    }
+    
+    if (this.state.filter.instructor || this.state.filter.instructor !== "") {
+      filteredArr = this.state.classesArr.filter(
+        (oneClass) =>
+          oneClass.instructor.username === this.state.filter.instructor
+      );
+    }
+
+    this.setState({ classesArr: filteredArr });
+  };
+
+
+
+
 
   updateBubble = () => {
     let f1;
