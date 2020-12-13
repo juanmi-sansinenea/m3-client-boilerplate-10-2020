@@ -152,21 +152,26 @@ export class Classes extends Component {
 
   filterResults = () => {
     console.log('this.state.filter :>> ', this.state.filter);
-    let filteredArr;
+
+    let arrayToFilter = this.state.classesArrFloor;
+
     if (this.state.filter.classType || this.state.filter.classType !== "") {
-      filteredArr = this.state.classesArr.filter(
+      arrayToFilter = arrayToFilter.filter(
         (oneClass) => oneClass.classType === this.state.filter.classType
       );
     }
+    console.log('after 1st filt ', arrayToFilter);
     
     if (this.state.filter.instructor || this.state.filter.instructor !== "") {
-      filteredArr = this.state.classesArr.filter(
+      arrayToFilter = arrayToFilter.filter(
         (oneClass) =>
           oneClass.instructor.username === this.state.filter.instructor
       );
     }
 
-    this.setState({ classesArr: filteredArr });
+    console.log('after 2nd filt :>> ', arrayToFilter);
+
+    this.setState({ classesArr: arrayToFilter });
   };
 
 
