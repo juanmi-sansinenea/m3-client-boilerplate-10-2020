@@ -20,12 +20,12 @@ class FilterSelector extends Component {
         {this.state.expanded === true
           ? this.props.arr.map((el) => (
               <div
+                className="filterItem"
                 key={el}
                 onClick={() => {
                   this.setState({ expanded: false });
                   this.setState({ selectedValue: el });
-                  // reset filter array to floor, to filter freshly over all results
-                  this.props.filterResults(el);
+                  this.props.filterResults(el); /// <--- seguramente esto es lo que hay que tocar: debe filtar por TODOS los filtros a la vez
                   // The above function comes passed as props
                   // and sends back 'el' as props of its own: the a value to filter with, i.e., Mafe, or HIIT
                   // which will be ran by the three filters
