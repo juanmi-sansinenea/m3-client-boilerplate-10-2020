@@ -7,6 +7,7 @@ export class ClassDetail extends Component {
         instructorName: "",
         duration: "",
         scheduled: "",
+        targetedMessage: "",
         comments: [],
       };
     render() {
@@ -30,9 +31,10 @@ export class ClassDetail extends Component {
           .get(`http://localhost:5000/api/classes/${class_id}`)
           .then((apiResponse) => {
             const theClass = apiResponse.data;
-            const { classType, duration, scheduled, comments } = theClass;
+            const { classType, duration, scheduled, targetedMessage, comments } = theClass;
             const instructorName = theClass.instructor.username;
-            this.setState({ classType, instructorName, duration, scheduled, comments });
+            console.log('targetedMessage :>> ', targetedMessage);
+            this.setState({ classType, instructorName, duration, scheduled, targetedMessage, comments });
           })
           .catch((err) => console.log(err));
       };

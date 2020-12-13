@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Private from './pages/Private';
 import Classes from './pages/Classes';
 import ClassDetail from './pages/ClassDetail';
+import CMS from './pages/CMS';
 
 import AnonRoute from './components/AnonRoute';
 import PrivateRoute from './components/PrivateRoute';
@@ -28,7 +29,8 @@ class App extends Component {
           <AnonRoute exact path="/signup" component={Signup} />
           <AnonRoute exact path="/login" component={Login} />
 
-          <PrivateRoute exact path="/private" component={Private} /> 
+          <PrivateRoute exact path="/private" component={Private} />
+          <PrivateRoute exact path="/CMS" component={CMS} /> 
           <PrivateRoute exact path="/classes" component={Classes} />
           <PrivateRoute exact path="/classes/:class_id" component={ClassDetail} />
         </Switch>
