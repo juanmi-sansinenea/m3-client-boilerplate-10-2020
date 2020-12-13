@@ -15,16 +15,15 @@ export class Classes extends Component {
     classTypesArr: [],
     instructorsArr: [],
     durationsArr: [],
-    filterCriteria: {
+    filter: {
       classType: "",
       instructor: "",
       duration: "",
     },
-    totalActiveFilters: 0,
+    activeFilterCount: 0,
   };
 
   render() {
-    const { classesArr } = this.state;
     return (
       <div>
         {this.state.filterToolIsOn && (
@@ -33,21 +32,23 @@ export class Classes extends Component {
 
             <FilterSelector
               arr={this.state.classTypesArr}
-              filterResults={this.filterByClass}
+              filterResults={this.filterResults}
               text="Class type"
-              filterValue={this.state.filterCriteria.classType}
+              filterValue={this.state.filter.classType}
             />
 
             <FilterSelector
               arr={this.state.instructorsArr}
-              filterResults={this.filterByInstructor}
+              filterResults={this.filterResults}
               text="Instructor"
+              filterValue={this.state.filter.classType}
             />
 
             <FilterSelector
               arr={this.state.durationsArr}
-              filterResults={this.filterByDuration}
+              filterResults={this.filterResults}
               text="Duration"
+              filterValue={this.state.filter.classType}
             />
 
             {
@@ -59,7 +60,7 @@ export class Classes extends Component {
                     this.updateBubble();
                   }}
                 >
-                  See {classesArr.length} results
+                  See {this.state.classesArr.length} results
                 </button>
               </div>
             }
@@ -70,13 +71,12 @@ export class Classes extends Component {
           // Filter button
           <div className="button">
             <button onClick={() => this.setState({ filterToolIsOn: true })}>
-              Filter ({this.state.totalActiveFilters})
+              Filter ({this.state.activeFilterCount})
             </button>
           </div>
         }
 
-        {classesArr.map((oneClass) => (
-          // Mapping of all classes list
+        {this.state.classesArr.map((oneClass) => (
           <Link key={oneClass._id} to={`/classes/${oneClass._id}`}>
             <div className="oneClass">
               <h3>
@@ -132,44 +132,24 @@ export class Classes extends Component {
     }));
   };
 
-  filterByClass = (props) => {
-    // props here gets a filtering value, such as HIIT or Ziggy22
-    // we create the filtered array
-    const myClassesArr = this.state.classesArrFloor; // <-- We filter over the untouched array 'Floor' !!
-    const filteredArr = myClassesArr.filter(
-      (oneClass) => oneClass.classType === props
-    );
-    // and update the array to be filtered by props
-    this.setState({ classesArr: filteredArr });
-    // and update the centralised state of selected filters
-    const myFilterCriteria = { ...this.state.filterCriteria };
-    console.log("myFilterCriteria before:>> ", myFilterCriteria);
+  filterResults = (props) => {
+  console.log('props :>> ', props);
 
-    myFilterCriteria.classType = props;
-    console.log(
-      "myFilterCriteria.classType assigned to props:>> ",
-      myFilterCriteria
-    );
-
-    this.setState({ filterCriteria: myFilterCriteria });
-    //console.log('this.state.filterCriteria :>> ', this.state.filterCriteria);
-
-    this.updateBubble();
   };
 
   updateBubble = () => {
     let f1;
     let f2;
     let f3;
-    this.state.filterCriteria.classType || ""
+    this.state.filter.classType || ""
       ? (f1 = 1)
-      : (f1 = 0)(this.state.filterCriteria.instructor || "")
+      : (f1 = 0)(this.state.filter.instructor || "")
       ? (f2 = 1)
-      : (f2 = 0)(this.state.filterCriteria.duration || "")
+      : (f2 = 0)(this.state.filter.duration || "")
       ? (f3 = 1)
       : (f3 = 0);
     let total = f1 + f2 + f3;
-    this.setState({ totalActiveFilters: total });
+    this.setState({ activeFilterCount: total });
   };
 }
 
