@@ -35,8 +35,13 @@ export class Classes extends Component {
                 const myFilter = { ...this.state.filter };
                 myFilter.classType = "";
                 myFilter.instructor = "";
-                myFilter.duration = ""; 
-                this.setState({ filterToolIsOn: false, classesArr: this.state.classesArrFloor, filter: myFilter, activeFilterCount: 0 });
+                myFilter.duration = "";
+                this.setState({
+                  filterToolIsOn: false,
+                  classesArr: this.state.classesArrFloor,
+                  filter: myFilter,
+                  activeFilterCount: 0,
+                });
               }}
             >
               X close
@@ -91,7 +96,9 @@ export class Classes extends Component {
           <Link key={oneClass._id} to={`/classes/${oneClass._id}`}>
             <div className="oneClass">
               <h3>
-                {oneClass.scheduled} | {oneClass.classType}
+                {this.addZeroBefore(new Date(oneClass.scheduled).getHours())}:
+                {this.addZeroBefore(new Date(oneClass.scheduled).getMinutes())} |{" "}
+                {oneClass.classType}
               </h3>
               <p>
                 {oneClass.instructor.username} | {oneClass.duration} min{" "}
@@ -179,14 +186,20 @@ export class Classes extends Component {
     let activeFilterCount = 0;
     console.log("activeFilterCount :>> ", activeFilterCount);
 
-    if (this.state.filter.classType !== "" && this.state.filter.classType !== "none") {
+    if (
+      this.state.filter.classType !== "" &&
+      this.state.filter.classType !== "none"
+    ) {
       activeFilterCount++;
       arrayToFilter = arrayToFilter.filter(
         (oneClass) => oneClass.classType === this.state.filter.classType
       );
     }
 
-    if (this.state.filter.instructor !== "" && this.state.filter.instructor !== "none") {
+    if (
+      this.state.filter.instructor !== "" &&
+      this.state.filter.instructor !== "none"
+    ) {
       activeFilterCount++;
       arrayToFilter = arrayToFilter.filter(
         (oneClass) =>
@@ -194,7 +207,10 @@ export class Classes extends Component {
       );
     }
 
-    if (this.state.filter.duration !== "" && this.state.filter.duration !== "none") {
+    if (
+      this.state.filter.duration !== "" &&
+      this.state.filter.duration !== "none"
+    ) {
       activeFilterCount++;
       arrayToFilter = arrayToFilter.filter(
         (oneClass) => oneClass.duration === this.state.filter.duration
@@ -202,6 +218,81 @@ export class Classes extends Component {
     }
 
     this.setState({ classesArr: arrayToFilter, activeFilterCount });
+  };
+
+  addZeroBefore = (n) => {
+    return (n < 10 ? "0" : "") + n;
+  };
+
+  humanizeDay = (day) => {
+    switch (day) {
+      case 0:
+        return "Sunday";
+      case 1:
+        return "Monday";
+      case 2:
+        return "Tuesday";
+      case 3:
+        return "Wednesday";
+      case 4:
+        return "Thursday";
+      case 5:
+        return "Friday";
+      case 6:
+        return "Saturday";
+      default:
+        return "XXX";
+    }
+  };
+  humanizeDayMini = (day) => {
+    switch (day) {
+      case 0:
+        return "Sun";
+      case 1:
+        return "Mon";
+      case 2:
+        return "Tue";
+      case 3:
+        return "Wed";
+      case 4:
+        return "Thu";
+      case 5:
+        return "Fri";
+      case 6:
+        return "Sat";
+      default:
+        return "XXX";
+    }
+  };
+  humanizeMonth = (month) => {
+    switch (month) {
+      case 0:
+        return "Jan.";
+      case 1:
+        return "Feb.";
+      case 2:
+        return "Mar.";
+      case 3:
+        return "Apr.";
+      case 4:
+        return "May.";
+      case 5:
+        return "Jun.";
+      case 6:
+        return "Jul.";
+      case 7:
+        return "Ago.";
+      case 8:
+        return "Sep.";
+      case 9:
+        return "Oct.";
+      case 10:
+        return "Nov.";
+      case 11:
+        return "Dec.";
+      default:
+        return "XXX";
+    }
   };
 }
 
