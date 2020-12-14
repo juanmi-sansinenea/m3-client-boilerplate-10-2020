@@ -10,7 +10,8 @@ class CMS extends Component {
     instructor: "",
     duration: "",
     scheduled: "",
-    targetedMessage: "",
+    message: "",
+    comments: [],
   };
 
   handleFormSubmit = (event) => {
@@ -20,24 +21,36 @@ class CMS extends Component {
       instructor,
       duration,
       scheduled,
-      targetedMessage,
+      message,
+      comments,
     } = this.state;
+    console.log("classType :>> ", classType);
+    console.log("instructor :>> ", instructor);
+    console.log("duration :>> ", duration);
+    console.log("scheduled :>> ", scheduled);
+    console.log("message :>> ", message);
+    console.log("comments :>> ", comments);
 
     axios
-      .post("http://localhost:5000/api/classes", {
-        classType,
-        instructor,
-        duration,
-        scheduled,
-        targetedMessage,
-      })
+      .post(
+        "http://localhost:5000/api/classes",
+        {
+          classType,
+          instructor,
+          duration,
+          scheduled,
+          message,
+          comments,
+        },
+        { withCredentials: true }
+      )
       .then(() => {
         this.setState({
           classType: "",
-          instructorName: "",
+          instructor: "",
           duration: "",
           scheduled: "",
-          targetedMessage: "",
+          message: "",
         });
       })
       .catch((error) => console.log(error));
@@ -59,36 +72,40 @@ class CMS extends Component {
             value={this.state.classType}
             onChange={this.handleChange}
           />
-          <br /><br />
+          <br />
+          <br />
           <input
             name="instructor"
             placeholder="instructor"
             value={this.state.instructor}
             onChange={this.handleChange}
           />
-          <br /><br />
+          <br />
+          <br />
           <input
             name="duration"
             placeholder="duration"
             value={this.state.duartion}
             onChange={this.handleChange}
           />
-          <br /><br />
+          <br />
+          <br />
           <input
-            
             name="scheduled"
             placeholder="date object"
             value={this.state.scheduled}
             onChange={this.handleChange}
           />
-          <br /><br />
+          <br />
+          <br />
           <input
-            name="targetedMessage"
+            name="message"
             placeholder="targeted message"
-            value={this.state.targetedMessage}
+            value={this.state.message}
             onChange={this.handleChange}
           />
-          <br /><br />
+          <br />
+          <br />
           <div>
             <br />
             <button onClick={this.handleFormSubmit}>SUBMIT</button>

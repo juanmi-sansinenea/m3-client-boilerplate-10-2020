@@ -175,18 +175,18 @@ export class Classes extends Component {
   filterResults = () => {
     console.log("this.state.filter :>> ", this.state.filter);
 
-    let arrayToFilter = this.state.classesArrFloor;
+    let arrayToFilter = [...this.state.classesArrFloor];
     let activeFilterCount = 0;
     console.log("activeFilterCount :>> ", activeFilterCount);
 
-    if (this.state.filter.classType || this.state.filter.classType !== "") {
+    if (this.state.filter.classType !== "" && this.state.filter.classType !== "none") {
       activeFilterCount++;
       arrayToFilter = arrayToFilter.filter(
         (oneClass) => oneClass.classType === this.state.filter.classType
       );
     }
 
-    if (this.state.filter.instructor || this.state.filter.instructor !== "") {
+    if (this.state.filter.instructor !== "" && this.state.filter.instructor !== "none") {
       activeFilterCount++;
       arrayToFilter = arrayToFilter.filter(
         (oneClass) =>
@@ -194,7 +194,7 @@ export class Classes extends Component {
       );
     }
 
-    if (this.state.filter.duration || this.state.filter.duration !== "") {
+    if (this.state.filter.duration !== "" && this.state.filter.duration !== "none") {
       activeFilterCount++;
       arrayToFilter = arrayToFilter.filter(
         (oneClass) => oneClass.duration === this.state.filter.duration
