@@ -33,7 +33,7 @@ class CMS extends Component {
 
     axios
       .post(
-        "http://localhost:5000/api/classes",
+        `${process.env.REACT_APP_API_URL}/api/classes`,
         {
           classType,
           instructor,

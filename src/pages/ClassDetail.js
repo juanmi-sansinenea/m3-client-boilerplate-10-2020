@@ -28,7 +28,7 @@ export class ClassDetail extends Component {
     getClassDetails = () => {
         const { class_id } = this.props.match.params;
         axios
-          .get(`http://localhost:5000/api/classes/${class_id}`)
+          .get(`${process.env.REACT_APP_API_URL}/api/classes/${class_id}`)
           .then((apiResponse) => {
             const theClass = apiResponse.data;
             const { classType, duration, scheduled, targetedMessage, comments } = theClass;

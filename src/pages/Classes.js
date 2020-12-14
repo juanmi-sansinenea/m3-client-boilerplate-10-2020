@@ -105,7 +105,7 @@ export class Classes extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/api/classes")
+      .get(`${process.env.REACT_APP_API_URL}/api/classes`)
       .then((apiResponse) => {
         // set classes array, and the original copy 'floor' to be saved safe
         // this.setState({ classesArrFloor: apiResponse.data });

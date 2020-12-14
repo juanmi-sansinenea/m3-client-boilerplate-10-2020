@@ -8,7 +8,7 @@ class ExampleService {
     // this.api  is a reusable base of the request containing the base url (baseURL) 
     // of the API and the options ( `withCredentials: true` )
     this.api = axios.create({        
-      baseURL: "http://localhost:5000/api",
+      baseURL: `${process.env.REACT_APP_API_URL}/api`, //`${process.env.REACT_APP_API_URL}/api
       withCredentials: true
     });
   }
