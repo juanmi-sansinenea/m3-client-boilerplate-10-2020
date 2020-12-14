@@ -11,7 +11,6 @@ class CMS extends Component {
     duration: "",
     scheduled: "",
     message: "",
-    comments: [],
   };
 
   handleFormSubmit = (event) => {
@@ -22,14 +21,7 @@ class CMS extends Component {
       duration,
       scheduled,
       message,
-      comments,
     } = this.state;
-    console.log("classType :>> ", classType);
-    console.log("instructor :>> ", instructor);
-    console.log("duration :>> ", duration);
-    console.log("scheduled :>> ", scheduled);
-    console.log("message :>> ", message);
-    console.log("comments :>> ", comments);
 
     axios
       .post(
@@ -40,7 +32,6 @@ class CMS extends Component {
           duration,
           scheduled,
           message,
-          comments,
         },
         { withCredentials: true }
       )
@@ -50,7 +41,6 @@ class CMS extends Component {
           instructor: "",
           duration: "",
           scheduled: "",
-          message: "",
         });
       })
       .catch((error) => console.log(error));
@@ -85,7 +75,7 @@ class CMS extends Component {
           <input
             name="duration"
             placeholder="duration"
-            value={this.state.duartion}
+            value={this.state.duration}
             onChange={this.handleChange}
           />
           <br />
@@ -98,14 +88,7 @@ class CMS extends Component {
           />
           <br />
           <br />
-          <input
-            name="message"
-            placeholder="targeted message"
-            value={this.state.message}
-            onChange={this.handleChange}
-          />
-          <br />
-          <br />
+         
           <div>
             <br />
             <button onClick={this.handleFormSubmit}>SUBMIT</button>
