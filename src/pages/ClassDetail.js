@@ -68,11 +68,10 @@ export class ClassDetail extends Component {
 
         <p>{this.state.targetedMessage} </p>
         {/* ------Listo of Comments -------------------- */}
-        {this.state.comments.map((oneComment) => (
+        {this.state.comments.map((oneComment, i) => (
           <div key={oneComment._id}>
             <p>
-              {oneComment.author.username}
-              {oneComment.updated_at}
+              {oneComment.author.username} | {this.state.commentTimeDiffs[i]}
             </p>
             <p>{oneComment.commentBody}</p>
           </div>
@@ -110,32 +109,51 @@ export class ClassDetail extends Component {
       })
       .catch((err) => console.log(err));
   };
-formatDate =(date)=> {
-    var d = new Date(date),
-        minutes = '' + (d.getMinutes()),
-        hours = '' + (d.getHours()),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
 
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
+  msToTime = (duration) => {
+    var //milliseconds = parseInt((duration % 1000) / 100),
+      //seconds = Math.floor((duration / 1000) % 60),
+      minutes = Math.floor((duration / (1000 * 60)) % 60),
+      hours = Math.floor((duration / (1000 * 60 * 60)) % 24),
+      days = Math.floor(duration / (1000 * 60 * 60 * 24));
 
-    return [year, month, day, hours, minutes].join('-');
-}
+    //hours = hours < 10 ? "0" + hours : hours;
+    //minutes = minutes < 10 ? "0" + minutes : minutes;
+    //seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    let print = "";
+    if (days === 0 && hours === 0 && minutes === 0) {
+      print = `just now`;
+    } else {
+      if (days !== 0) {
+        days = days + "d ";
+      } else {
+        days = "";
+      }
+      if (hours !== 0) {
+        hours = hours + "h ";
+      } else {
+        hours = "";
+      }
+      if (minutes !== 0) {
+        minutes = minutes + "m ";
+      } else {
+        minutes = "";
+      }
+      print = `${days}${hours}${minutes}`;
+    }
+
+    return print;
+  };
   fillCommentTimeDiffs = () => {
     const timeDiffs = this.state.comments.map((oneComment) => {
-      let formattedDateNow = this.formatDate(new Date());
-      let formattedDateComment = this.formatDate(oneComment.updated_at);
-      console.log((formattedDateNow), typeof formattedDateNow)
-      console.log((formattedDateComment), typeof formattedDateComment)
-      
-
-      return (formattedDateNow-formattedDateComment);
+      const now = new Date();
+      const dateComment = new Date(oneComment.updated_at);
+      const difference = now - dateComment;
+      const niceDifference = this.msToTime(difference);
+      return niceDifference;
     });
-    console.log('timeDiffs :>> ', timeDiffs);
+    this.setState({ commentTimeDiffs: timeDiffs });
   };
   loadTargetedMessage = () => {
     const rand = Math.floor(Math.random() * Math.floor(messagesArr.length));
