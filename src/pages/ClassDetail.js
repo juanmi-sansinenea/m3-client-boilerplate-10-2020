@@ -14,6 +14,7 @@ export class ClassDetail extends Component {
     scheduled: "",
     targetedMessage: "",
     comments: [],
+    commentTimeDiffs: [],
     commentToolIsOn: false,
     commentBody: "",
   };
@@ -66,10 +67,13 @@ export class ClassDetail extends Component {
         <p>{this.state.scheduled} </p>
 
         <p>{this.state.targetedMessage} </p>
-          {/* ------Listo of Comments ------------------------- */}
+        {/* ------Listo of Comments -------------------- */}
         {this.state.comments.map((oneComment) => (
           <div key={oneComment._id}>
-            <p>{oneComment.author.username}</p>
+            <p>
+              {oneComment.author.username}
+              {oneComment.updated_at}
+            </p>
             <p>{oneComment.commentBody}</p>
           </div>
         ))}
@@ -91,8 +95,9 @@ export class ClassDetail extends Component {
       .get(`${process.env.REACT_APP_API_URL}/api/classes/${class_id}`)
       .then((apiResponse) => {
         const theClass = apiResponse.data;
-        const { classType, duration, scheduled, comments } = theClass;
+        const { classType, duration, scheduled } = theClass;
         const instructorName = theClass.instructor.username;
+        const comments = theClass.comments.reverse();
 
         this.setState({
           classType,
@@ -101,8 +106,36 @@ export class ClassDetail extends Component {
           scheduled,
           comments,
         });
+        this.fillCommentTimeDiffs();
       })
       .catch((err) => console.log(err));
+  };
+formatDate =(date)=> {
+    var d = new Date(date),
+        minutes = '' + (d.getMinutes()),
+        hours = '' + (d.getHours()),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day, hours, minutes].join('-');
+}
+  fillCommentTimeDiffs = () => {
+    const timeDiffs = this.state.comments.map((oneComment) => {
+      let formattedDateNow = this.formatDate(new Date());
+      let formattedDateComment = this.formatDate(oneComment.updated_at);
+      console.log((formattedDateNow), typeof formattedDateNow)
+      console.log((formattedDateComment), typeof formattedDateComment)
+      
+
+      return (formattedDateNow-formattedDateComment);
+    });
+    console.log('timeDiffs :>> ', timeDiffs);
   };
   loadTargetedMessage = () => {
     const rand = Math.floor(Math.random() * Math.floor(messagesArr.length));
@@ -124,8 +157,6 @@ export class ClassDetail extends Component {
     const { commentBody } = this.state;
     const classId = this.props.match.params.class_id;
 
-    console.log("classId, commentBody :>> ", classId, commentBody);
-    console.log(this.props);
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/api/comments`,
@@ -136,7 +167,7 @@ export class ClassDetail extends Component {
         { withCredentials: true }
       )
       .then(() => {
-        this.getClassDetails();
+        this.getClassDetails(); // refresh the state with new data from the DB
         this.setState({
           commentBody: "",
           commentToolIsOn: false,
