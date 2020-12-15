@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Classes.css";
 import FilterSelector from "./../components/FilterSelector";
+import ButtonPinkFixed from "./../components/ButtonPinkFixed";
 
 const onlyUnique = require("./../utils/utils.js").onlyUnique;
 
@@ -30,18 +31,19 @@ export class Classes extends Component {
           <div className="filter-tool">
             <h2>Filter results</h2>
 
-            <div
+            <div // X Close
               onClick={() => {
+                // reset state
                 const myFilter = { ...this.state.filter };
                 myFilter.classType = "";
                 myFilter.instructor = "";
                 myFilter.duration = "";
                 this.setState({
-                  filterToolIsOn: false,
                   classesArr: this.state.classesArrFloor,
                   filter: myFilter,
                   activeFilterCount: 0,
                 });
+                this.closeFilterTool();
               }}
             >
               X close
@@ -68,24 +70,16 @@ export class Classes extends Component {
               filterValue={this.state.filter.classType}
             />
 
-            {
-              // See results button
-              <div className="button">
-                <button
-                  onClick={() => {
-                    this.setState({ filterToolIsOn: false });
-                  }}
-                >
-                  See {this.state.classesArr.length} results
-                </button>
-              </div>
-            }
+            <ButtonPinkFixed //Button [ See n results ]
+              text={`See ${this.state.classesArr.length} results`}
+              handleClick={this.closeFilterTool}
+            />
           </div>
         )}
 
         {
           // Filter button
-          <div className="button">
+          <div className="button-filter">
             <button onClick={() => this.setState({ filterToolIsOn: true })}>
               Filter ({this.state.activeFilterCount})
             </button>
@@ -97,8 +91,8 @@ export class Classes extends Component {
             <div className="oneClass">
               <h3>
                 {this.addZeroBefore(new Date(oneClass.scheduled).getHours())}:
-                {this.addZeroBefore(new Date(oneClass.scheduled).getMinutes())} |{" "}
-                {oneClass.classType}
+                {this.addZeroBefore(new Date(oneClass.scheduled).getMinutes())}{" "}
+                | {oneClass.classType}
               </h3>
               <p>
                 {oneClass.instructor.username} | {oneClass.duration} min{" "}
@@ -218,6 +212,12 @@ export class Classes extends Component {
     }
 
     this.setState({ classesArr: arrayToFilter, activeFilterCount });
+  };
+
+  closeFilterTool = () => {
+    this.setState({
+      filterToolIsOn: false,
+    });
   };
 
   addZeroBefore = (n) => {

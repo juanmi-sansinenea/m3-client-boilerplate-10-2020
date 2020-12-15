@@ -1,0 +1,18 @@
+.button-pink-fixed {
+    width: 100vw;
+    position: fixed;
+    bottom: 50px;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.button-pink-fixed button {
+    background-color: #ff0066;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 40px;
+    border: none;
+    outline: none;
+    height: 60px;
+}

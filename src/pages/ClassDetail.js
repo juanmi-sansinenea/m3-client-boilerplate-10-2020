@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import messagesArr from "./../data/targetedMessages.json"
+import messagesArr from "./../data/targetedMessages.json";
+import ButtonPinkFixed from "./../components/ButtonPinkFixed";
 
 export class ClassDetail extends Component {
   state = {
@@ -10,6 +11,7 @@ export class ClassDetail extends Component {
     scheduled: "",
     targetedMessage: "",
     comments: [],
+    commentToolIsOn: false,
   };
   render() {
     return (
@@ -21,6 +23,11 @@ export class ClassDetail extends Component {
         <p>{this.state.scheduled} </p>
         <p>{this.state.comments} </p>
         <p>{this.state.targetedMessage} </p>
+
+        <ButtonPinkFixed
+          text="Add comment"
+          handleClick={this.openCommentTool}
+        />
       </div>
     );
   }
@@ -34,14 +41,9 @@ export class ClassDetail extends Component {
       .get(`${process.env.REACT_APP_API_URL}/api/classes/${class_id}`)
       .then((apiResponse) => {
         const theClass = apiResponse.data;
-        const {
-          classType,
-          duration,
-          scheduled,
-          comments,
-        } = theClass;
+        const { classType, duration, scheduled, comments } = theClass;
         const instructorName = theClass.instructor.username;
-    
+
         this.setState({
           classType,
           instructorName,
@@ -52,11 +54,16 @@ export class ClassDetail extends Component {
       })
       .catch((err) => console.log(err));
   };
-  loadTargetedMessage=()=>{
+  loadTargetedMessage = () => {
     const rand = Math.floor(Math.random() * Math.floor(messagesArr.length));
     const messageToShow = messagesArr[rand];
-    this.setState ({targetedMessage: messageToShow});
-  }
+    this.setState({ targetedMessage: messageToShow });
+  };
+  openCommentTool = () => {
+    this.setState({
+      commentToolIsOn: true,
+    });
+  };
 }
 
 export default ClassDetail;

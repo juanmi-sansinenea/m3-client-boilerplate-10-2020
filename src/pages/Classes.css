@@ -7,7 +7,7 @@
     z-index: 2;
 }
 
-.button {
+.button-filter {
     width: 100vw;
     position: fixed;
     bottom: 50px;
@@ -16,15 +16,15 @@
     
 }
 
-.button button {
+.button-filter button {
     background-color: #c4c4c4;
     padding: 20px 40px;
     border-radius: 40px;
     border: none;
     outline: none;
     height: 60px;
-
 }
+
 /* ----Filter Selector overlay------ */
 .selector {
     width: 100vw;
