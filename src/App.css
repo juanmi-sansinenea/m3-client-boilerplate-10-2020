@@ -12,6 +12,7 @@ html, body {
 
 nav.navbar { 
   display: flex;
+  justify-content: space-around;
   padding: 0px 20px;
   background: #666666; 
   position: fixed;
@@ -19,10 +20,14 @@ nav.navbar {
   width: 100vw;
 }
 
-
+button {
+  cursor: pointer;
+  font-weight: bold;
+}
 
 .close-x {
   position: fixed;
   top: 15px;
   right: 15px;
+  cursor: pointer;
 }

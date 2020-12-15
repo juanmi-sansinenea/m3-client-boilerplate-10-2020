@@ -8,13 +8,13 @@ class Navbar extends Component {
     user && console.log('user.username, isLoggedIn :>> ', user.username, isLoggedIn);
     return (
       <nav className="navbar">
-        <Link to={'/'} id='home-btn'>
-          <h4>Home</h4>
+        <Link to={'/classes'}>
+          <h4>Classes</h4>
         </Link>
         {isLoggedIn ? (
           <>
-            <p>username: {user && user.username}</p>
-            <button onClick={logout}>Logout</button>
+            {/*<p>username: {user && user.username}</p>*/}
+            <h4 onClick={logout}>Logout</h4>
           </>
         ) : (
           <>

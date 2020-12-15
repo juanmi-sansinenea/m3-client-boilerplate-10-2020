@@ -1,6 +1,6 @@
 import { withAuth } from "./../context/auth-context";
 import axios from "axios";
-import "./CMS.css";
+
 
 import React, { Component } from "react";
 

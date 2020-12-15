@@ -13,11 +13,13 @@ export class ClassDetail extends Component {
     scheduled: "",
     targetedMessage: "",
     comments: [],
+    commmentBodies: [],
     commentToolIsOn: false,
+    commentBody: [],
   };
   render() {
     return (
-      <div >
+      <div>
         {/*--------------------Comment tool---------------------------------*/}
         {this.state.commentToolIsOn && (
           <div className="comment-tool">
@@ -32,18 +34,45 @@ export class ClassDetail extends Component {
             >
               X
             </div>
+
+            <div>
+              <div className="profile-pic"></div>
+              <form>
+                <textarea
+                  className="text-area"
+                  type="text"
+                  placeholder="Post your comment here"
+                  name="commentBody"
+                  value={this.state.commentBody}
+                  onChange={this.handleChange}
+                ></textarea>
+
+                <ButtonPinkFixed
+                  text="Post comment"
+                  handleClick={this.handleFormSubmit}
+                />
+              </form>
+            </div>
           </div>
         )}
         {/*-----------------End of Comment tool---------------------------------*/}
 
-        <Link className="close-x" to={"/classes"}>X</Link>
+        <Link className="close-x" to={"/classes"}>
+          X
+        </Link>
 
         <p>{this.state.classType} </p>
         <p>{this.state.instructorName} </p>
         <p>{this.state.duration} </p>
         <p>{this.state.scheduled} </p>
-        <p>{this.state.comments} </p>
+
         <p>{this.state.targetedMessage} </p>
+
+        {this.state.comments.map((oneComment) => (
+          <p key={oneComment._id}>{oneComment.commentBody}</p>
+        ))}
+          
+       
 
         <ButtonPinkFixed
           text="Add comment"
@@ -65,6 +94,10 @@ export class ClassDetail extends Component {
         const { classType, duration, scheduled, comments } = theClass;
         const instructorName = theClass.instructor.username;
 
+        
+        
+        console.log('comments :>> ', comments);
+
         this.setState({
           classType,
           instructorName,
@@ -84,6 +117,33 @@ export class ClassDetail extends Component {
     this.setState({
       commentToolIsOn: true,
     });
+  };
+  /*--------COMMENT TOOL-----------------------------------*/
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+    const { commentBody } = this.state;
+    const { class_id } = this.props.match.params;
+
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/api/comments`,
+        {
+          commentBody,
+          class_id,
+        },
+        { withCredentials: true }
+      )
+      .then(() => {
+        this.setState({
+          commentBody: "",
+          commentToolIsOn: false,
+        });
+      })
+      .catch((error) => console.log(error));
   };
 }
 
