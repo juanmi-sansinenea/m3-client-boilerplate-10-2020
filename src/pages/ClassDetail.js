@@ -17,7 +17,7 @@ export class ClassDetail extends Component {
   };
   render() {
     return (
-      <div className="close-x">
+      <div >
         {/*--------------------Comment tool---------------------------------*/}
         {this.state.commentToolIsOn && (
           <div className="comment-tool">
