@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import messagesArr from "./../data/targetedMessages.json";
 import ButtonPinkFixed from "./../components/ButtonPinkFixed";
+import "./ClassDetail.css";
+import { Link } from "react-router-dom";
 
 export class ClassDetail extends Component {
   state = {
@@ -15,8 +17,27 @@ export class ClassDetail extends Component {
   };
   render() {
     return (
-      <div>
-        <h1>Class Detail</h1>
+      <div className="close-x">
+        {/*--------------------Comment tool---------------------------------*/}
+        {this.state.commentToolIsOn && (
+          <div className="comment-tool">
+            <h2>Comment here</h2>
+            <div
+              className="close-x"
+              onClick={() => {
+                // reset state
+                // close tool
+                this.setState({ commentToolIsOn: false });
+              }}
+            >
+              X
+            </div>
+          </div>
+        )}
+        {/*-----------------End of Comment tool---------------------------------*/}
+
+        <Link className="close-x" to={"/classes"}>X</Link>
+
         <p>{this.state.classType} </p>
         <p>{this.state.instructorName} </p>
         <p>{this.state.duration} </p>

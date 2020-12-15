@@ -6,6 +6,7 @@ import App from './App';
 import { AuthProvider } from './context/auth-context';
 // We wrap the <App /> around the <AuthProvider> in order to be able to pass
 // auth-related variables anywhere around the app thru the <Consumer>
+import './index.css';
 
 ReactDOM.render(
   <Router>

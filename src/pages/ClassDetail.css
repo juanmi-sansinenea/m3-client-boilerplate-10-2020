@@ -1,0 +1,9 @@
+/* Just like filter-tool in classes, refactor */
+.comment-tool {
+    background-color : white;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    z-index: 3;
+}

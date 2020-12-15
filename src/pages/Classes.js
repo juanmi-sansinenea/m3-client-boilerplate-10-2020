@@ -31,7 +31,7 @@ export class Classes extends Component {
           <div className="filter-tool">
             <h2>Filter results</h2>
 
-            <div // X Close
+            <div className="close-x"
               onClick={() => {
                 // reset state
                 const myFilter = { ...this.state.filter };
@@ -46,7 +46,7 @@ export class Classes extends Component {
                 this.closeFilterTool();
               }}
             >
-              X close
+              X
             </div>
 
             <FilterSelector
