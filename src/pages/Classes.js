@@ -85,7 +85,7 @@ export class Classes extends Component {
             </button>
           </div>
         }
-
+{/* ----Body of the Classes page, the list---------------------- */}
         {this.state.classesArr.map((oneClass) => (
           <Link key={oneClass._id} to={`/classes/${oneClass._id}`}>
             <div className="oneClass">

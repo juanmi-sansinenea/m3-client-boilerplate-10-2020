@@ -4,6 +4,7 @@ import messagesArr from "./../data/targetedMessages.json";
 import ButtonPinkFixed from "./../components/ButtonPinkFixed";
 import "./ClassDetail.css";
 import { Link } from "react-router-dom";
+import { withAuth } from "./../context/auth-context";
 
 export class ClassDetail extends Component {
   state = {
@@ -13,13 +14,15 @@ export class ClassDetail extends Component {
     scheduled: "",
     targetedMessage: "",
     comments: [],
-    commmentBodies: [],
     commentToolIsOn: false,
-    commentBody: [],
+    commentBody: "",
   };
   render() {
     return (
       <div>
+        <Link className="close-x" to={"/classes"}>
+          X
+        </Link>
         {/*--------------------Comment tool---------------------------------*/}
         {this.state.commentToolIsOn && (
           <div className="comment-tool">
@@ -27,14 +30,12 @@ export class ClassDetail extends Component {
             <div
               className="close-x"
               onClick={() => {
-                // reset state
-                // close tool
                 this.setState({ commentToolIsOn: false });
               }}
             >
               X
             </div>
-
+            {/*-------------------------------------------- */}
             <div>
               <div className="profile-pic"></div>
               <form>
@@ -47,19 +48,17 @@ export class ClassDetail extends Component {
                   onChange={this.handleChange}
                 ></textarea>
 
-                <ButtonPinkFixed
+                <button onClick={this.handleFormSubmit}>Post comment</button>
+
+                {/* <ButtonPinkFixed
                   text="Post comment"
                   handleClick={this.handleFormSubmit}
-                />
+                /> */}
               </form>
             </div>
           </div>
         )}
-        {/*-----------------End of Comment tool---------------------------------*/}
-
-        <Link className="close-x" to={"/classes"}>
-          X
-        </Link>
+        {/*-------Body of the Class Details ------------------------------------*/}
 
         <p>{this.state.classType} </p>
         <p>{this.state.instructorName} </p>
@@ -67,12 +66,13 @@ export class ClassDetail extends Component {
         <p>{this.state.scheduled} </p>
 
         <p>{this.state.targetedMessage} </p>
-
+          {/* ------Listo of Comments ------------------------- */}
         {this.state.comments.map((oneComment) => (
-          <p key={oneComment._id}>{oneComment.commentBody}</p>
+          <div key={oneComment._id}>
+            <p>{oneComment.author.username}</p>
+            <p>{oneComment.commentBody}</p>
+          </div>
         ))}
-          
-       
 
         <ButtonPinkFixed
           text="Add comment"
@@ -94,10 +94,6 @@ export class ClassDetail extends Component {
         const { classType, duration, scheduled, comments } = theClass;
         const instructorName = theClass.instructor.username;
 
-        
-        
-        console.log('comments :>> ', comments);
-
         this.setState({
           classType,
           instructorName,
@@ -118,7 +114,7 @@ export class ClassDetail extends Component {
       commentToolIsOn: true,
     });
   };
-  /*--------COMMENT TOOL-----------------------------------*/
+  /*--------COMMENT TOOL FUNCTIONS ---------------------------------*/
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -126,18 +122,21 @@ export class ClassDetail extends Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
     const { commentBody } = this.state;
-    const { class_id } = this.props.match.params;
+    const classId = this.props.match.params.class_id;
 
+    console.log("classId, commentBody :>> ", classId, commentBody);
+    console.log(this.props);
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/api/comments`,
         {
           commentBody,
-          class_id,
+          classId,
         },
         { withCredentials: true }
       )
       .then(() => {
+        this.getClassDetails();
         this.setState({
           commentBody: "",
           commentToolIsOn: false,
@@ -147,4 +146,4 @@ export class ClassDetail extends Component {
   };
 }
 
-export default ClassDetail;
+export default withAuth(ClassDetail);
