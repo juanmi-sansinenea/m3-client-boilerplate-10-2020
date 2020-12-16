@@ -67,16 +67,28 @@ export class ClassDetail extends Component {
         <p>{this.state.scheduled} </p>
 
         <p>{this.state.targetedMessage} </p>
-        <br></br><br></br>
+        <br></br>
+        <br></br>
         {/* ------Listo of Comments -------------------- */}
         {this.state.comments.map((oneComment, i) => (
-          <div key={oneComment._id}>
+          <Link to={`/comment/${oneComment._id}`} key={oneComment._id}>
             <p>
               {oneComment.author.username} | {this.state.commentTimeDiffs[i]}
             </p>
+
             <p>{oneComment.commentBody}</p>
+
+            <p>view x replies</p>
+
+            {this.props.user._id === oneComment.author._id ? (
+              <div>
+                <img src="/img/edit.svg" alt="edit" />
+                <img src="/img/delete.svg" alt="delete" />
+              </div>
+            ) : null}
+
             <br />
-          </div>
+          </Link>
         ))}
 
         <ButtonPinkFixed
@@ -172,6 +184,7 @@ export class ClassDetail extends Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
+  //--------> CREATA: POST -----------
   handleFormSubmit = (event) => {
     event.preventDefault();
     const { commentBody } = this.state;
