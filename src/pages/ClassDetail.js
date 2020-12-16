@@ -86,10 +86,10 @@ export class ClassDetail extends Component {
             {/*------Edit and delete buttons (avail. only for 'me')--------------*/}
             {this.props.user._id === oneComment.author._id ? (
               <div>
-                <button
+                <button // pencil
                   onClick={() => {
                     this.setState({
-                      crudMode: "E",
+                      crudMode: "U", //UPDATE
                       commentBody: oneComment.commentBody,
                       commentId: oneComment._id,
                       commentToolIsOn: true,
@@ -98,9 +98,22 @@ export class ClassDetail extends Component {
                 >
                   <img src="/img/edit.svg" alt="edit" />
                 </button>
-                <div>
+                <button // x for deleting
+                  onClick={() => {
+                    // DELETE
+                    axios
+                      .delete(
+                        `${process.env.REACT_APP_API_URL}/api/comments/${oneComment._id}`,
+                        { withCredentials: true }
+                      )
+                      .then(() => {
+                        this.getClassDetails(); // refresh the state with new data from the DB
+                      })
+                      .catch((error) => console.log(error));
+                  }}
+                >
                   <img src="/img/delete.svg" alt="delete" />
-                </div>
+                </button>
               </div>
             ) : null}
           </div>
@@ -229,7 +242,7 @@ export class ClassDetail extends Component {
     }
 
     //in case CRUD MODE is Edit
-    if (this.state.crudMode === "E") {
+    if (this.state.crudMode === "U") {
       axios
         .put(
           `${process.env.REACT_APP_API_URL}/api/comments/${this.state.commentId}`,
