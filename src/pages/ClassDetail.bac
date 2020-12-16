@@ -34,12 +34,12 @@ export class ClassDetail extends Component {
               className="close-x"
               onClick={() => {
                 this.setState({ commentToolIsOn: false });
-                console.log(this.state.crudMode);
+                console.log(this.state.crudMode)
               }}
             >
               X
             </div>
-            {/*------------------------------------ */}
+            {/*---------------------------------- */}
             <div>
               <div className="profile-pic"></div>
               <form>
@@ -52,7 +52,13 @@ export class ClassDetail extends Component {
                   onChange={this.handleChange}
                 ></textarea>
 
-                <button onClick={this.handleFormSubmit}>Post comment</button>
+                <button
+                  onClick={() => {
+                    this.handleFormSubmit();
+                  }}
+                >
+                  Post comment
+                </button>
 
                 {/* <ButtonPinkFixed
                   text="Post comment"
@@ -62,7 +68,7 @@ export class ClassDetail extends Component {
             </div>
           </div>
         )}
-        {/*-------Body of the Class Details Summary ----------------------------------------------------------*/}
+        {/*-------Class Details Summary ----------------------------------------------------------*/}
 
         <p>{this.state.classType} </p>
         <p>{this.state.instructorName} </p>
@@ -109,11 +115,13 @@ export class ClassDetail extends Component {
         <ButtonPinkFixed
           text="Add comment"
           handleClick={() => {
-            this.setState({
+            this.setState({ 
               crudMode: "C",
               commentBody: "",
-              commentToolIsOn: true,
+              commentToolIsOn: true, 
             });
+            
+            
           }}
         />
       </div>
@@ -201,14 +209,14 @@ export class ClassDetail extends Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
-  //--------> CREATA: POST -----------
+  //--------> CREATE: POST -----------
   handleFormSubmit = (event) => {
     event.preventDefault();
     const { commentBody } = this.state;
     const classId = this.props.match.params.class_id;
-
+    
     // in case CRUD MODE is Create
-    if (this.state.crudMode === "C") {
+    //if (this.state.crudMode === "C") {
       axios
         .post(
           `${process.env.REACT_APP_API_URL}/api/comments`,
@@ -226,27 +234,27 @@ export class ClassDetail extends Component {
           });
         })
         .catch((error) => console.log(error));
-    }
+    //}
 
-    //in case CRUD MODE is Edit
-    if (this.state.crudMode === "E") {
-      axios
-        .put(
-          `${process.env.REACT_APP_API_URL}/api/comments/${this.state.commentId}`,
-          {
-            commentBody,
-          },
-          { withCredentials: true }
-        )
-        .then(() => {
-          this.getClassDetails(); // refresh the state with new data from the DB
-          this.setState({
-            commentBody: "",
-            commentToolIsOn: false,
-          });
-        })
-        .catch((error) => console.log(error));
-    }
+    // in case CRUD MODE is Edit
+    // if (this.state.crudMode === "E") {
+    //   axios
+    //     .put(
+    //       `${process.env.REACT_APP_API_URL}/api/comments/${this.state.commentId}`,
+    //       {
+    //         commentBody,
+    //       },
+    //       { withCredentials: true }
+    //     )
+    //     .then(() => {
+    //       this.getClassDetails(); // refresh the state with new data from the DB
+    //       this.setState({
+    //         commentBody: "",
+    //         commentToolIsOn: false,
+    //       });
+    //     })
+    //     .catch((error) => console.log(error));
+    // }
   };
 }
 
