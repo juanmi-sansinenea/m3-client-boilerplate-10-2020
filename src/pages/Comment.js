@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import ButtonPinkFixed from "./../components/ButtonPinkFixed";
 
 export class Comment extends Component {
   state = {
@@ -10,7 +11,17 @@ export class Comment extends Component {
     replyToolIsOn: false,
   };
   render() {
-    return <div>{this.state.commentBody}</div>;
+    return (
+      <div>
+        {this.state.commentBody}
+        <ButtonPinkFixed
+          text="Reply"
+          handelClick={() => {
+            this.setState({ replyToolIsOpen: true });
+          }}
+        ></ButtonPinkFixed>
+      </div>
+    );
   }
   componentDidMount() {
     this.getCommentDetails();
