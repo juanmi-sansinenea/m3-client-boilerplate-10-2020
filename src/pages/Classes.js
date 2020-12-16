@@ -88,6 +88,7 @@ export class Classes extends Component {
 {/* ----Body of the Classes page, the list---------------------- */}
         {this.state.classesArr.map((oneClass) => (
           <Link key={oneClass._id} to={`/classes/${oneClass._id}`}>
+          
             <div className="oneClass">
               <h3>
                 {this.addZeroBefore(new Date(oneClass.scheduled).getHours())}:

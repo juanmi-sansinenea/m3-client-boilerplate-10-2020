@@ -67,6 +67,7 @@ export class ClassDetail extends Component {
         <p>{this.state.scheduled} </p>
 
         <p>{this.state.targetedMessage} </p>
+        <br></br><br></br>
         {/* ------Listo of Comments -------------------- */}
         {this.state.comments.map((oneComment, i) => (
           <div key={oneComment._id}>
@@ -74,6 +75,7 @@ export class ClassDetail extends Component {
               {oneComment.author.username} | {this.state.commentTimeDiffs[i]}
             </p>
             <p>{oneComment.commentBody}</p>
+            <br />
           </div>
         ))}
 
