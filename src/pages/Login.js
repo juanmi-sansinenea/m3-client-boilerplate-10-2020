@@ -1,18 +1,18 @@
 import React, { Component } from "react";
-import { withAuth } from './../context/auth-context';
-import { Link } from 'react-router-dom';
+import { withAuth } from "./../context/auth-context";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   state = { username: "", password: "" };
 
-  handleFormSubmit = event => {
+  handleFormSubmit = (event) => {
     event.preventDefault();
     const { username, password } = this.state;
     // Call funciton coming from AuthProvider ( via withAuth ). Original in auth-context — AuthProvider
     this.props.login(username, password);
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
@@ -22,21 +22,41 @@ class Login extends Component {
 
     return (
       <div>
-        <h1>Login</h1>
+        <div className="auth">
 
-        <form onSubmit={this.handleFormSubmit}>
+          <form onSubmit={this.handleFormSubmit}>
+            
+              <input
+                className="inputAuthForms"
+                type="text"
+                name="username"
+                placeholder="Enter your username"
+                value={username}
+                onChange={this.handleChange}
+              />
+
+              <input
+                className="inputAuthForms"
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={this.handleChange}
+              />
+              <div className="button-submit-container">
+                <Link to="/signup" >
+                  <p>Sign up</p>{" "}
+                </Link>
+                <input type="submit" value="Login" />
+              </div>
+            
+          </form>
           
-          <label>Username:</label>
-          <input type="text" name="username" value={username} onChange={this.handleChange}/>
+        </div>
 
-          <label>Password:</label>
-          <input type="password" name="password" value={password} onChange={this.handleChange} />
-
-          <input type="submit" value="Login" />
-        </form>
-        <Link to="/signup">
-              <p className="navbar-button">Sign Up</p>{' '}
-            </Link>
+        <div className="bg-image">
+          <img src="/img/login.png" alt="bg" />
+        </div>
       </div>
     );
   }

@@ -2,12 +2,14 @@ import React from "react";
 
 function Splash() {
   setTimeout(() => {
-    window.location.href ="/login";
-  }, 2000)
+    window.location.href = "/login";
+  }, 4000);
   return (
-    <div>
-      <h1>Splash Page</h1>
-      
+    <div className="auth">
+      <img className="logo" src="/img/logo.svg" alt="logo" />
+      <div className="splash-image">
+        <img src="/img/login.png" alt="bg" />
+      </div>
     </div>
   );
 }

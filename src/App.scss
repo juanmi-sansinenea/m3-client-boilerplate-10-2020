@@ -1,0 +1,178 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+:root {
+  --lightest: white;
+  --light: rgb(228, 225, 254);
+  --highlight: #f06;
+  --light-grey: #c4c4c4;
+  --middle-grey: #666;
+  --dark-grey: #333;
+  --darkest: black;
+}
+
+%small-caps {
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+%pink-button {
+  font-weight: bold;
+  background-color: var(--highlight);
+  color: var(--lightest);
+  @extend %small-caps;
+  width: 164px;
+  height: 60px;
+  border-radius: 60px;
+  border: none;
+  width: 180px;
+}
+
+body {
+  background-color: var(--darkest);
+  color: var(--lightest);
+  font: 14px "Roboto", "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+html,
+body {
+  font-family: "roboto";
+  margin: 0;
+  padding: 0;
+}
+a {
+  color: var(--lightest);
+  text-decoration: none;
+}
+button:focus {
+  outline: 0;
+}
+h1 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  margin-left: 25px;
+}
+h2 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+}
+h3 {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+/* ---------------------------------------- */
+.App {
+  padding: 20px;
+}
+
+nav.navbar {
+  display: flex;
+  justify-content: space-around;
+  padding: 0px 20px;
+  background: var(--dark-grey);
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+}
+
+button {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.close-x {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}
+/* --------Splash / Login / Signup------------ */
+.auth {
+  width: 90vw;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+.splash-image {
+  position: fixed;
+  top: 0;
+  opacity: 0;
+  animation-name: fadein;
+  animation-duration: 3s;
+  animation-delay: 1s;
+  z-index: -1;
+}
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.logo {
+  width: 300px;
+  height: auto;
+  margin-bottom: 40px;
+  /* animation-name: blow; */
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 3.5s;
+}
+@keyframes blow {
+  0% {
+    opacity: 1;
+    width: 300px;
+  }
+  100% {
+    opacity: 0;
+    width: 800px;
+  }
+}
+
+.bg-image {
+  position: fixed;
+  top: 0;
+  z-index: -1;
+}
+
+.inputAuthForms {
+  width: 85vw;
+  display: block;
+  font-size: 18px;
+  font-family: sans-serif;
+  font-weight: 300;
+  color: var(--dark-grey);
+  box-sizing: border-box;
+  border-radius: 2em;
+  background-color: var(--lightest);
+  border: none;
+  padding: 21px;
+  padding-left: 32px;
+  margin: 20px;
+}
+.inputAuthForms:focus {
+  outline: 0;
+}
+
+.button-submit-container {
+  width: 85vw;
+  @extend %small-caps;
+  display: flex;
+  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+}
+
+.button-submit-container input {
+  @extend %pink-button;
+  margin-left: 40px;
+}

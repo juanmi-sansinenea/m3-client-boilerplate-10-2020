@@ -8,8 +8,8 @@
 }
 
 .button-pink-fixed button {
-    background-color: #ff0066;
-    color: white;
+    background-color: var (--highlight);
+    color: var (--lightest);
     padding: 20px 40px;
     border-radius: 40px;
     border: none;
