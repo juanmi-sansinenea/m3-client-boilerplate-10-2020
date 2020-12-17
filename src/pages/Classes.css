@@ -1,49 +1,74 @@
+.one-class {
+  background-color: var(--dark-grey);
+  margin-bottom: 1px;
+  height: 90px;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+}
+.one-class div {
+  margin-left: 16px;
+}
+.profile-pic img {
+  width: 72px;
+  height: auto;
+  background-color: var(--lightest);
+  clip-path: circle(36px at center);
+}
+.content {
+  width: 100%;
+}
+.flechita {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 32px;
+}
+
+/* --------FILTER TOOL-------------------------------------------------- */
 .filter-tool {
-    background-color : white;
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    z-index: 2;
+  background-color: var(--lightest);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  z-index: 2;
 }
 
 .button-filter {
-    width: 100vw;
-    position: fixed;
-    bottom: 50px;
-    display: flex;
-    justify-content: center;
-    
+  width: 100vw;
+  position: fixed;
+  bottom: 50px;
+  display: flex;
+  justify-content: center;
 }
 
 .button-filter button {
-    background-color: #c4c4c4;
-    padding: 20px 40px;
-    border-radius: 40px;
-    border: none;
-    outline: none;
-    height: 60px;
+  background-color: var(--light-grey);
+  padding: 20px 40px;
+  border-radius: 40px;
+  border: none;
+  outline: none;
+  height: 60px;
 }
 
 /* ----Filter Selector overlay------ */
 .selector {
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    margin: 20px;
-    height: 60px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  height: 60px;
 }
 .selector button {
-    padding: 20px;
-    border-radius: 40px;
-    border: none;
-    outline: none;
-    width: 80vw;
-    height: 60px;
+  padding: 20px;
+  border-radius: 40px;
+  border: none;
+  outline: none;
+  width: 80vw;
+  height: 60px;
 }
 
 .filterItem {
-    background-color: cyan;
-    text-align: center;
-    padding: 15px;
+  text-align: center;
+  padding: 15px;
 }

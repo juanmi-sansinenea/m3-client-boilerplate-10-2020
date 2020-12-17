@@ -27,11 +27,13 @@ export class Classes extends Component {
   render() {
     return (
       <div>
+        {/* -----------------Filter tool overlay --------------------------------- */}
         {this.state.filterToolIsOn && (
           <div className="filter-tool">
             <h2>Filter results</h2>
 
-            <div className="close-x"
+            <div
+              className="close-x"
               onClick={() => {
                 // reset state
                 const myFilter = { ...this.state.filter };
@@ -85,22 +87,45 @@ export class Classes extends Component {
             </button>
           </div>
         }
-{/* ----Body of the Classes page, the list---------------------- */}
-        {this.state.classesArr.map((oneClass) => (
-          <Link key={oneClass._id} to={`/classes/${oneClass._id}`}>
-          
-            <div className="oneClass">
-              <h3>
-                {this.addZeroBefore(new Date(oneClass.scheduled).getHours())}:
-                {this.addZeroBefore(new Date(oneClass.scheduled).getMinutes())}{" "}
-                | {oneClass.classType}
-              </h3>
-              <p>
-                {oneClass.instructor.username} | {oneClass.duration} min{" "}
-              </p>
-            </div>
-          </Link>
-        ))}
+
+        {/* ----Body of the Classes page, the list------------------------------------------------------ */}
+        <div className="header">
+          <h1>Classes</h1>
+        </div>
+        <div className="scroll-container">
+          {this.state.classesArr.map((oneClass) => (
+            <Link key={oneClass._id} to={`/classes/${oneClass._id}`}>
+
+              <div className="one-class">
+                <div className="profile-pic">
+                  <img src={`/img/face${Math.floor(Math.random() * Math.floor(5)+1)}.png`} alt="profile"></img>
+                </div>
+                <div className="content">
+                  <h3>
+                    {this.addZeroBefore(
+                      new Date(oneClass.scheduled).getHours()
+                    )}
+                    :
+                    {this.addZeroBefore(
+                      new Date(oneClass.scheduled).getMinutes()
+                    )}{" "}
+                    | {oneClass.classType}
+                  </h3>
+                  
+                  <p>
+                    {oneClass.instructor.username} | {oneClass.duration} min{" "}
+                  </p>
+                </div>
+                <div className="flechita">
+                  <div>
+                    <img src="/img/flechita.svg" alt="arrow"></img>
+                  </div>
+                </div>
+              </div>
+
+            </Link>
+          ))}
+        </div>
       </div>
     );
   }

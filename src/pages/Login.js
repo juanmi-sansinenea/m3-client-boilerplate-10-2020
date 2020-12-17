@@ -23,40 +23,34 @@ class Login extends Component {
     return (
       <div>
         <div className="auth">
-
           <form onSubmit={this.handleFormSubmit}>
-            
-              <input
-                className="inputAuthForms"
-                type="text"
-                name="username"
-                placeholder="Enter your username"
-                value={username}
-                onChange={this.handleChange}
-              />
+            <input
+              className="inputAuthForms"
+              type="text"
+              name="username"
+              placeholder="Enter your username"
+              value={username}
+              onChange={this.handleChange}
+            />
 
-              <input
-                className="inputAuthForms"
-                type="password"
-                name="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={this.handleChange}
-              />
-              <div className="button-submit-container">
-                <Link to="/signup" >
-                  <p>Sign up</p>{" "}
-                </Link>
-                <input type="submit" value="Login" />
-              </div>
-            
+            <input
+              className="inputAuthForms"
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={this.handleChange}
+            />
+            <div className="button-submit-container">
+              <Link to="/signup">
+                <p>Sign up</p>{" "}
+              </Link>
+              <input type="submit" value="Login" />
+            </div>
           </form>
-          
         </div>
 
-        <div className="bg-image">
-          <img src="/img/login.png" alt="bg" />
-        </div>
+        <img className="bg-image" src="/img/login.png" alt="bg" />
       </div>
     );
   }

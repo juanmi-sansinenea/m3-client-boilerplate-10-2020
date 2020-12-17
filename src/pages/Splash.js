@@ -7,9 +7,7 @@ function Splash() {
   return (
     <div className="auth">
       <img className="logo" src="/img/logo.svg" alt="logo" />
-      <div className="splash-image">
-        <img src="/img/login.png" alt="bg" />
-      </div>
+      <img className="splash-image" src="/img/login.png" alt="bg" />
     </div>
   );
 }

@@ -8,6 +8,9 @@
   --middle-grey: #666;
   --dark-grey: #333;
   --darkest: black;
+  --header-height: 12vh;
+  --navbar-height: 8vh;
+  --rest-of-height: 80vh;
 }
 
 %small-caps {
@@ -21,11 +24,19 @@
   background-color: var(--highlight);
   color: var(--lightest);
   @extend %small-caps;
-  width: 164px;
+  width: 160px;
   height: 60px;
   border-radius: 60px;
   border: none;
-  width: 180px;
+  box-shadow: 2px 2px 0 0px rgba(0, 0, 0, 0.1);
+}
+
+%bg-image {
+  position: fixed;
+  width: 100vw;
+  height: auto;
+  top: 0;
+  z-index: -1;
 }
 
 body {
@@ -66,18 +77,33 @@ h3 {
 }
 
 /* ---------------------------------------- */
-.App {
-  padding: 20px;
+.header {
+  width: 100vw;
+  height: var(--header-height);
+  background-color: var(--darkest);
+  position: fixed;
+  top: 0;
+  border-bottom: 1px solid var(--middle-grey);
 }
 
+.scroll-container {
+  position: fixed;
+  top: var(--header-height);
+  width: 100vw;
+  height: var(--rest-of-height);
+  overflow-y: scroll;
+  z-index: -1;
+}
 nav.navbar {
   display: flex;
   justify-content: space-around;
   padding: 0px 20px;
-  background: var(--dark-grey);
+  background: var(--darkest);
   position: fixed;
   bottom: 0;
   width: 100vw;
+  height: var(--navbar-height);
+  border-top: 1px solid var(--middle-grey);
 }
 
 button {
@@ -102,13 +128,11 @@ button {
   align-content: center;
 }
 .splash-image {
-  position: fixed;
-  top: 0;
+  @extend %bg-image;
   opacity: 0;
   animation-name: fadein;
   animation-duration: 3s;
   animation-delay: 1s;
-  z-index: -1;
 }
 @keyframes fadein {
   0% {
@@ -139,9 +163,7 @@ button {
 }
 
 .bg-image {
-  position: fixed;
-  top: 0;
-  z-index: -1;
+  @extend %bg-image;
 }
 
 .inputAuthForms {
@@ -173,6 +195,11 @@ button {
 }
 
 .button-submit-container input {
+  //the pink button itself
   @extend %pink-button;
-  margin-left: 40px;
+  width: 42vw;
+  margin-left: 10vw;
+}
+.button-submit-container input:hover {
+  outline: 0;
 }
