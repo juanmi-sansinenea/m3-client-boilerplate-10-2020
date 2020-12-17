@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./Classes.css";
+import "./Classes.scss";
 import FilterSelector from "./../components/FilterSelector";
 import ButtonPinkFixed from "./../components/ButtonPinkFixed";
 

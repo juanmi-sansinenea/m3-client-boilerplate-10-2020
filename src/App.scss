@@ -8,8 +8,10 @@
   --middle-grey: #666;
   --dark-grey: #333;
   --darkest: black;
+
   --header-height: 12vh;
   --navbar-height: 8vh;
+  --folating-button-height: 15vh;
   --rest-of-height: 80vh;
 }
 
@@ -19,16 +21,21 @@
   text-transform: uppercase;
 }
 
-%pink-button {
-  font-weight: bold;
-  background-color: var(--highlight);
-  color: var(--lightest);
+%button {
   @extend %small-caps;
+  background-color: var(--light-grey);
+  color: var(--dark-grey);
   width: 160px;
   height: 60px;
   border-radius: 60px;
   border: none;
   box-shadow: 2px 2px 0 0px rgba(0, 0, 0, 0.1);
+}
+
+%pink-button {
+  @extend %button;
+  color: var(--lightest);
+  background-color: var(--highlight);
 }
 
 %bg-image {
@@ -97,7 +104,6 @@ h3 {
 nav.navbar {
   display: flex;
   justify-content: space-around;
-  padding: 0px 20px;
   background: var(--darkest);
   position: fixed;
   bottom: 0;

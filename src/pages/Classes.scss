@@ -1,3 +1,6 @@
+@import "./../App.scss";
+
+
 .one-class {
   background-color: var(--dark-grey);
   margin-bottom: 1px;
@@ -37,18 +40,13 @@
 .button-filter {
   width: 100vw;
   position: fixed;
-  bottom: 50px;
+  bottom: var( --folating-button-height);
   display: flex;
   justify-content: center;
 }
 
 .button-filter button {
-  background-color: var(--light-grey);
-  padding: 20px 40px;
-  border-radius: 40px;
-  border: none;
-  outline: none;
-  height: 60px;
+  @extend %button;
 }
 
 /* ----Filter Selector overlay------ */
