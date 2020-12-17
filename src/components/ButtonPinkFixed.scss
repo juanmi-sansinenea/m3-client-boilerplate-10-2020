@@ -1,0 +1,5 @@
+@import "./../App.scss";
+
+.see-results {
+    @extend %pink-button;
+}

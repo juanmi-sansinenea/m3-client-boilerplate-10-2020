@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import messagesArr from "./../data/targetedMessages.json";
 import ButtonPinkFixed from "./../components/ButtonPinkFixed";
-import "./ClassDetail.css";
+import "./ClassDetail.scss";
 import { Link } from "react-router-dom";
 import { withAuth } from "./../context/auth-context";
 
@@ -10,6 +10,7 @@ export class ClassDetail extends Component {
   state = {
     classType: "",
     instructorName: "",
+    profilepic: "",
     duration: "",
     scheduled: "",
     targetedMessage: "",
@@ -63,8 +64,14 @@ export class ClassDetail extends Component {
           </div>
         )}
         {/*-------Body of the Class Details Summary ----------------------------------------------------------*/}
-
-        <p>{this.state.classType} </p>
+        <div className="portrait-container">
+          <img
+            src={this.state.profilepic}
+            alt="portrait"
+            className="portrait"
+          />
+        </div>
+        <h2>{this.state.classType} </h2>
         <p>{this.state.instructorName} </p>
         <p>{this.state.duration} </p>
         <p>{this.state.scheduled} </p>
@@ -144,11 +151,13 @@ export class ClassDetail extends Component {
         const theClass = apiResponse.data;
         const { classType, duration, scheduled } = theClass;
         const instructorName = theClass.instructor.username;
+        const profilepic = theClass.instructor.profilepic;
         const comments = theClass.comments.reverse();
 
         this.setState({
           classType,
           instructorName,
+          profilepic,
           duration,
           scheduled,
           comments,

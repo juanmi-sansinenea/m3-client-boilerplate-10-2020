@@ -48,29 +48,30 @@ export class Classes extends Component {
                 this.closeFilterTool();
               }}
             >
-              X
+              <img src="/img/clsx.svg" alt="close-panel" />
             </div>
+            <div className="selectors-container">
+              <FilterSelector
+                arr={this.state.classTypesArr}
+                filterResults={this.updateFilter1}
+                text="Class type"
+                filterValue={this.state.filter.classType}
+              />
 
-            <FilterSelector
-              arr={this.state.classTypesArr}
-              filterResults={this.updateFilter1}
-              text="Class type"
-              filterValue={this.state.filter.classType}
-            />
+              <FilterSelector
+                arr={this.state.instructorsArr}
+                filterResults={this.updateFilter2}
+                text="Instructor"
+                filterValue={this.state.filter.classType}
+              />
 
-            <FilterSelector
-              arr={this.state.instructorsArr}
-              filterResults={this.updateFilter2}
-              text="Instructor"
-              filterValue={this.state.filter.classType}
-            />
-
-            <FilterSelector
-              arr={this.state.durationsArr}
-              filterResults={this.updateFilter3}
-              text="Duration"
-              filterValue={this.state.filter.classType}
-            />
+              <FilterSelector
+                arr={this.state.durationsArr}
+                filterResults={this.updateFilter3}
+                text="Duration"
+                filterValue={this.state.filter.classType}
+              />
+            </div>
 
             <ButtonPinkFixed //Button [ See n results ]
               text={`See ${this.state.classesArr.length} results`}
@@ -81,8 +82,8 @@ export class Classes extends Component {
 
         {
           // Filter button
-          <div className="button-filter">
-            <button onClick={() => this.setState({ filterToolIsOn: true })}>
+          <div className="fixed-button-container">
+            <button className="filter-button" onClick={() => this.setState({ filterToolIsOn: true })}>
               Filter ({this.state.activeFilterCount})
             </button>
           </div>
@@ -90,12 +91,11 @@ export class Classes extends Component {
 
         {/* ----Body of the Classes page, the list------------------------------------------------------ */}
         <div className="header">
-          <h1>Classes</h1>
+          <h1 className="title">Classes</h1>
         </div>
         <div className="scroll-container">
           {this.state.classesArr.map((oneClass, i) => (
             <Link key={oneClass._id} to={`/classes/${oneClass._id}`}>
-
               <div className="one-class">
                 <div className="profile-pic">
                   <img src={oneClass.instructor.profilepic} alt="profile"></img>
@@ -111,8 +111,8 @@ export class Classes extends Component {
                     )}{" "}
                     | {oneClass.classType}
                   </h3>
-                  
-                  <p>
+
+                  <p className="small-info">
                     {oneClass.instructor.username} | {oneClass.duration} min{" "}
                   </p>
                 </div>
@@ -122,7 +122,6 @@ export class Classes extends Component {
                   </div>
                 </div>
               </div>
-
             </Link>
           ))}
         </div>
@@ -181,7 +180,6 @@ export class Classes extends Component {
         `none`,
       ].flat(),
     }));
-
   };
 
   updateFilter1 = (props) => {

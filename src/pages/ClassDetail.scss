@@ -1,0 +1,34 @@
+@import "./../App.scss";
+
+body {
+ background-color: var(--lighter-grey);
+ color: var(--dark-grey);
+}
+
+.portrait-container {
+    background-color: var(--lightest);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 35vh;
+
+}
+
+.portrait {
+  height: 35vh;
+  width: auto;
+}
+
+/* Just like filter-tool in classes, refactor */
+.comment-tool {
+  background-color: white;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  z-index: 3;
+}
+.text-area {
+  width: 100vw;
+  height: 60vh;
+}
