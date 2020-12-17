@@ -5,8 +5,10 @@ import { Link } from "react-router-dom";
 import "./Classes.scss";
 import FilterSelector from "./../components/FilterSelector";
 import ButtonPinkFixed from "./../components/ButtonPinkFixed";
+//import {addZeroBefore, humanizeDay, humanizeDayMini, humanizeMonth} from "./../utils/utils";
 
-const onlyUnique = require("./../utils/utils.js").onlyUnique;
+const onlyUnique = require("../utils/onlyUnique.js").onlyUnique;
+//const {addZeroBefore, humanizeDay, humanizeDayMini, humanizeMonth} = require("./../utils/utils");
 
 export class Classes extends Component {
   state = {
@@ -81,7 +83,7 @@ export class Classes extends Component {
         )}
 
         {
-          // Filter button
+          // FILTER BUTTON //////////
           <div className="fixed-button-container">
             <button className="filter-button" onClick={() => this.setState({ filterToolIsOn: true })}>
               Filter ({this.state.activeFilterCount})
@@ -199,11 +201,11 @@ export class Classes extends Component {
   };
 
   filterResults = () => {
-    console.log("this.state.filter :>> ", this.state.filter);
+
 
     let arrayToFilter = [...this.state.classesArrFloor];
     let activeFilterCount = 0;
-    console.log("activeFilterCount :>> ", activeFilterCount);
+
 
     if (
       this.state.filter.classType !== "" &&

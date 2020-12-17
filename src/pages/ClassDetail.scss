@@ -3,6 +3,7 @@
 body {
  background-color: var(--lighter-grey);
  color: var(--dark-grey);
+ min-height: 100vh;
 }
 
 .portrait-container {
@@ -17,6 +18,29 @@ body {
 .portrait {
   height: 35vh;
   width: auto;
+}
+.pink-h2 {
+  color: var(--highlight);
+  position: absolute;
+  left: 16px;
+}
+.duration-and-type {
+  margin-left: 25px;
+}
+
+.small-caps {
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  line-height: 0px;
+  margin-left: 25px;
+}
+.medium-text {
+  font-weight: 500;
+  font-size: 21px;
+  margin-left: 25px;
+  color: var(--dark-grey);
+  width: 80vw;
 }
 
 /* Just like filter-tool in classes, refactor */

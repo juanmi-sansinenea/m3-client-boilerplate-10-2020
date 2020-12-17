@@ -6,6 +6,7 @@ import "./ClassDetail.scss";
 import { Link } from "react-router-dom";
 import { withAuth } from "./../context/auth-context";
 
+
 export class ClassDetail extends Component {
   state = {
     classType: "",
@@ -21,6 +22,7 @@ export class ClassDetail extends Component {
     commentId: "",
     crudMode: "",
   };
+  
   render() {
     return (
       <div>
@@ -64,6 +66,14 @@ export class ClassDetail extends Component {
           </div>
         )}
         {/*-------Body of the Class Details Summary ----------------------------------------------------------*/}
+        <h2 className="pink-h2">
+          {this.humanizeDayMini( new Date (this.state.scheduled).getDay()) },{" "}
+          {this.addZeroBefore( new Date (this.state.scheduled).getDate()) }
+          <br />
+          {this.addZeroBefore(new Date (this.state.scheduled).getHours())}:
+          {this.addZeroBefore(new Date (this.state.scheduled).getMinutes())}h
+        </h2>
+        
         <div className="portrait-container">
           <img
             src={this.state.profilepic}
@@ -71,15 +81,15 @@ export class ClassDetail extends Component {
             className="portrait"
           />
         </div>
-        <h2>{this.state.classType} </h2>
-        <p>{this.state.instructorName} </p>
-        <p>{this.state.duration} </p>
-        <p>{this.state.scheduled} </p>
+        <h2 className="duration-and-type">{`${this.state.duration} min ${this.state.classType}`} </h2>
+        <p className="small-caps">{this.state.instructorName} </p>
+        <div style={{height:"40px"}}></div>
+    
 
-        <p>{this.state.targetedMessage} </p>
+        <p className="medium-text">{this.state.targetedMessage} </p>
         <br></br>
         <br></br>
-        {/* ------Listo of Comments --------------------------------------------------------------- */}
+        {/* ------List of Comments --------------------------------------------------------------- */}
         {this.state.comments.map((oneComment, i) => (
           <div key={oneComment._id}>
             <Link to={`/comment/${oneComment._id}`}>
@@ -121,8 +131,10 @@ export class ClassDetail extends Component {
                 >
                   <img src="/img/delete.svg" alt="delete" />
                 </button>
+                
               </div>
             ) : null}
+            
           </div>
         ))}
 
@@ -268,6 +280,80 @@ export class ClassDetail extends Component {
           });
         })
         .catch((error) => console.log(error));
+    }
+  };
+  addZeroBefore = (n) => {
+    return (n < 10 ? "0" : "") + n;
+  };
+
+  humanizeDay = (day) => {
+    switch (day) {
+      case 0:
+        return "Sunday";
+      case 1:
+        return "Monday";
+      case 2:
+        return "Tuesday";
+      case 3:
+        return "Wednesday";
+      case 4:
+        return "Thursday";
+      case 5:
+        return "Friday";
+      case 6:
+        return "Saturday";
+      default:
+        return "XXX";
+    }
+  };
+  humanizeDayMini = (day) => {
+    switch (day) {
+      case 0:
+        return "Sun";
+      case 1:
+        return "Mon";
+      case 2:
+        return "Tue";
+      case 3:
+        return "Wed";
+      case 4:
+        return "Thu";
+      case 5:
+        return "Fri";
+      case 6:
+        return "Sat";
+      default:
+        return "XXX";
+    }
+  };
+  humanizeMonth = (month) => {
+    switch (month) {
+      case 0:
+        return "Jan.";
+      case 1:
+        return "Feb.";
+      case 2:
+        return "Mar.";
+      case 3:
+        return "Apr.";
+      case 4:
+        return "May.";
+      case 5:
+        return "Jun.";
+      case 6:
+        return "Jul.";
+      case 7:
+        return "Ago.";
+      case 8:
+        return "Sep.";
+      case 9:
+        return "Oct.";
+      case 10:
+        return "Nov.";
+      case 11:
+        return "Dec.";
+      default:
+        return "XXX";
     }
   };
 }
