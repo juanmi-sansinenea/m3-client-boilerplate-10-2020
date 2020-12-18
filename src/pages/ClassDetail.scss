@@ -1,0 +1,110 @@
+@import "./../App.scss";
+
+body {
+ background-color: var(--lighter-grey);
+ color: var(--dark-grey);
+}
+.bg {
+  background-color: (--lighter-grey);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: -10;
+}
+
+.portrait-container {
+    background-color: var(--lightest);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 35vh;
+
+}
+
+.portrait {
+  height: 35vh;
+  width: auto;
+}
+.pink-h2 {
+  color: var(--highlight);
+  position: absolute;
+  left: 16px;
+}
+.duration-and-type {
+  margin-left: 25px;
+}
+
+.small-caps {
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  line-height: 0px;
+  margin-left: 25px;
+}
+.medium-text {
+  font-weight: 500;
+  font-size: 21px;
+  line-height: 28px;
+  margin-left: 25px;
+  color: var(--middle-grey);
+  width: 80vw;
+}
+
+.small-comment {
+  font-weight: 500;
+  line-height: 21px;
+  margin-left: 25px;
+  color: var(--middle-grey);
+  width: 80vw;
+}
+
+a, a:visited {
+  color: var(--middle-grey);
+  text-decoration: none;
+}
+button:focus {
+  outline: 0;
+}
+.pinklink {
+  color: var(--highlight);
+}
+.actions {
+  border: none;
+  background-color: var(--lightest-grey);
+}
+
+
+
+
+
+
+/* Just like filter-tool in classes, refactor */
+.comment-tool {
+  background-color: white;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  z-index: 3;
+}
+.text-area {
+  width: 100vw;
+  height: 60vh;
+}
+
+
+.faker-class {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  align-items: center;
+
+}
+
+.faker-class img {
+  width: 100vw;
+
+}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import messagesArr from "./../data/targetedMessages.json";
 import ButtonPinkFixed from "./../components/ButtonPinkFixed";
-import "./ClassDetail.css";
+import "./ClassDetail.scss";
 import { Link } from "react-router-dom";
 import { withAuth } from "./../context/auth-context";
 
@@ -10,6 +10,7 @@ export class ClassDetail extends Component {
   state = {
     classType: "",
     instructorName: "",
+    profilepic: "",
     duration: "",
     scheduled: "",
     targetedMessage: "",
@@ -19,12 +20,21 @@ export class ClassDetail extends Component {
     commentBody: "",
     commentId: "",
     crudMode: "",
+    fakerClass: true,
   };
+
   render() {
     return (
-      <div>
+      <div className="scroll-container-detail">
+      {/* -----------------Faker class ----------------------------------------- */}
+      {this.state.fakerClass ? (
+          <div className="faker-class">
+            <img src="/img/home-yoga.jpg" alt="classtime"/>
+          </div>
+        ) : null
+        }
         <Link className="close-x" to={"/classes"}>
-          X
+          <img src="/img/clsx.svg" alt="close-panel" />
         </Link>
         {/*--------------------Open Comment tool Modal---------------------------------*/}
         {this.state.commentToolIsOn && (
@@ -53,71 +63,99 @@ export class ClassDetail extends Component {
                 ></textarea>
 
                 <button onClick={this.handleFormSubmit}>Post comment</button>
-
-                {/* <ButtonPinkFixed
-                  text="Post comment"
-                  handleClick={this.handleFormSubmit}
-                /> */}
               </form>
             </div>
           </div>
         )}
         {/*-------Body of the Class Details Summary ----------------------------------------------------------*/}
+        <h2 className="pink-h2">
+          {this.humanizeDayMini(new Date(this.state.scheduled).getDay())},{" "}
+          {this.addZeroBefore(new Date(this.state.scheduled).getDate())}
+          <br />
+          {this.addZeroBefore(new Date(this.state.scheduled).getHours())}:
+          {this.addZeroBefore(new Date(this.state.scheduled).getMinutes())}h
+        </h2>
 
-        <p>{this.state.classType} </p>
-        <p>{this.state.instructorName} </p>
-        <p>{this.state.duration} </p>
-        <p>{this.state.scheduled} </p>
+        <div className="portrait-container">
+          <img
+            src={this.state.profilepic}
+            alt="portrait"
+            className="portrait"
+          />
+        </div>
+        <h2 className="duration-and-type">
+          {`${this.state.duration} min ${this.state.classType}`}{" "}
+        </h2>
+        <p className="small-caps">{this.state.instructorName} </p>
+        <div style={{ height: "40px" }}></div>
 
-        <p>{this.state.targetedMessage} </p>
+        <p className="medium-text">{this.state.targetedMessage} </p>
         <br></br>
         <br></br>
-        {/* ------Listo of Comments --------------------------------------------------------------- */}
-        {this.state.comments.map((oneComment, i) => (
-          <div key={oneComment._id}>
-            <Link to={`/comment/${oneComment._id}`}>
-              <p>
-                {oneComment.author.username} | {this.state.commentTimeDiffs[i]}
-              </p>
-              <p>{oneComment.commentBody}</p>
-              <p>view x replies</p>
-              <br />
-            </Link>
-            {/*------Edit and delete buttons (avail. only for 'me')--------------*/}
-            {this.props.user._id === oneComment.author._id ? (
-              <div>
-                <button // pencil
-                  onClick={() => {
-                    this.setState({
-                      crudMode: "U", //UPDATE
-                      commentBody: oneComment.commentBody,
-                      commentId: oneComment._id,
-                      commentToolIsOn: true,
-                    });
-                  }}
-                >
-                  <img src="/img/edit.svg" alt="edit" />
-                </button>
-                <button // x for deleting
-                  onClick={() => {
-                    // DELETE
-                    axios
-                      .delete(
-                        `${process.env.REACT_APP_API_URL}/api/comments/${oneComment._id}`,
-                        { withCredentials: true }
-                      )
-                      .then(() => {
-                        this.getClassDetails(); // refresh the state with new data from the DB
-                      })
-                      .catch((error) => console.log(error));
-                  }}
-                >
-                  <img src="/img/delete.svg" alt="delete" />
-                </button>
+        {/* ------List of Comments --------------------------------------------------------------- */}
+        <div >
+          {this.state.comments.map((oneComment, i) => (
+            <div
+              className="small-comment"
+              key={oneComment._id}
+              style={{ color: "#333" }}
+            >
+              <div className="comment-card">
+                <div className="profile-pic">
+                  <img src={oneComment.author.profilepic} alt="profile"></img>
+                </div>
+                <div>
+                  <Link to={`/comment/${oneComment._id}`}>
+                    <p style={{ color: "#333", fontWeight: "bold" }}>
+                      {oneComment.author.username} |{" "}
+                      {this.state.commentTimeDiffs[i]}
+                    </p>
+                    <p>{oneComment.commentBody}</p>
+                    <p className="pinklink">view x replies</p>
+                    <br />
+                  </Link>
+                  {/*------Edit and delete buttons (avail. only for 'me')--------------*/}
+                  {this.props.user._id === oneComment.author._id ? (
+                    <div>
+                      <button
+                        className="actions" // pencil
+                        onClick={() => {
+                          this.setState({
+                            crudMode: "U", //UPDATE
+                            commentBody: oneComment.commentBody,
+                            commentId: oneComment._id,
+                            commentToolIsOn: true,
+                          });
+                        }}
+                      >
+                        <img src="/img/edit.svg" alt="edit" />
+                      </button>
+                      <button
+                        className="actions" // x for deleting
+                        onClick={() => {
+                          // DELETE
+                          axios
+                            .delete(
+                              `${process.env.REACT_APP_API_URL}/api/comments/${oneComment._id}`,
+                              { withCredentials: true }
+                            )
+                            .then(() => {
+                              this.getClassDetails(); // refresh the state with new data from the DB
+                            })
+                            .catch((error) => console.log(error));
+                        }}
+                      >
+                        <img src="/img/delete.svg" alt="delete" />
+                      </button>
+                      <div style={{ height: "40px" }}></div>
+                    </div>
+                  ) : null}
+                </div>
               </div>
-            ) : null}
-          </div>
-        ))}
+            </div>
+          ))}
+          
+        </div>
 
         <ButtonPinkFixed
           text="Add comment"
@@ -129,12 +167,18 @@ export class ClassDetail extends Component {
             });
           }}
         />
+        <div style={{ height: "240px" }}></div>
+        <div className="bg"></div>
       </div>
     );
   }
   componentDidMount() {
     this.getClassDetails();
     this.loadTargetedMessage();
+    this.startFakerClass();
+  }
+  startFakerClass = () => {
+    setTimeout(()=>{this.setState({fakerClass: false})}, 4000)
   }
   getClassDetails = () => {
     const { class_id } = this.props.match.params;
@@ -144,11 +188,13 @@ export class ClassDetail extends Component {
         const theClass = apiResponse.data;
         const { classType, duration, scheduled } = theClass;
         const instructorName = theClass.instructor.username;
+        const profilepic = theClass.instructor.profilepic;
         const comments = theClass.comments.reverse();
 
         this.setState({
           classType,
           instructorName,
+          profilepic,
           duration,
           scheduled,
           comments,
@@ -259,6 +305,80 @@ export class ClassDetail extends Component {
           });
         })
         .catch((error) => console.log(error));
+    }
+  };
+  addZeroBefore = (n) => {
+    return (n < 10 ? "0" : "") + n;
+  };
+
+  humanizeDay = (day) => {
+    switch (day) {
+      case 0:
+        return "Sunday";
+      case 1:
+        return "Monday";
+      case 2:
+        return "Tuesday";
+      case 3:
+        return "Wednesday";
+      case 4:
+        return "Thursday";
+      case 5:
+        return "Friday";
+      case 6:
+        return "Saturday";
+      default:
+        return "XXX";
+    }
+  };
+  humanizeDayMini = (day) => {
+    switch (day) {
+      case 0:
+        return "Sun";
+      case 1:
+        return "Mon";
+      case 2:
+        return "Tue";
+      case 3:
+        return "Wed";
+      case 4:
+        return "Thu";
+      case 5:
+        return "Fri";
+      case 6:
+        return "Sat";
+      default:
+        return "XXX";
+    }
+  };
+  humanizeMonth = (month) => {
+    switch (month) {
+      case 0:
+        return "Jan.";
+      case 1:
+        return "Feb.";
+      case 2:
+        return "Mar.";
+      case 3:
+        return "Apr.";
+      case 4:
+        return "May.";
+      case 5:
+        return "Jun.";
+      case 6:
+        return "Jul.";
+      case 7:
+        return "Ago.";
+      case 8:
+        return "Sep.";
+      case 9:
+        return "Oct.";
+      case 10:
+        return "Nov.";
+      case 11:
+        return "Dec.";
+      default:
+        return "XXX";
     }
   };
 }

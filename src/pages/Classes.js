@@ -5,8 +5,10 @@ import { Link } from "react-router-dom";
 import "./Classes.scss";
 import FilterSelector from "./../components/FilterSelector";
 import ButtonPinkFixed from "./../components/ButtonPinkFixed";
+//import {addZeroBefore, humanizeDay, humanizeDayMini, humanizeMonth} from "./../utils/utils";
 
-const onlyUnique = require("./../utils/utils.js").onlyUnique;
+const onlyUnique = require("../utils/onlyUnique.js").onlyUnique;
+//const {addZeroBefore, humanizeDay, humanizeDayMini, humanizeMonth} = require("./../utils/utils");
 
 export class Classes extends Component {
   state = {
@@ -22,11 +24,13 @@ export class Classes extends Component {
       duration: "",
     },
     activeFilterCount: 0,
+    
   };
 
   render() {
     return (
       <div>
+        
         {/* -----------------Filter tool overlay --------------------------------- */}
         {this.state.filterToolIsOn && (
           <div className="filter-tool">
@@ -48,29 +52,30 @@ export class Classes extends Component {
                 this.closeFilterTool();
               }}
             >
-              X
+              <img src="/img/clsx.svg" alt="close-panel" />
             </div>
+            <div className="selectors-container">
+              <FilterSelector
+                arr={this.state.classTypesArr}
+                filterResults={this.updateFilter1}
+                text="Class type"
+                filterValue={this.state.filter.classType}
+              />
 
-            <FilterSelector
-              arr={this.state.classTypesArr}
-              filterResults={this.updateFilter1}
-              text="Class type"
-              filterValue={this.state.filter.classType}
-            />
+              <FilterSelector
+                arr={this.state.instructorsArr}
+                filterResults={this.updateFilter2}
+                text="Instructor"
+                filterValue={this.state.filter.classType}
+              />
 
-            <FilterSelector
-              arr={this.state.instructorsArr}
-              filterResults={this.updateFilter2}
-              text="Instructor"
-              filterValue={this.state.filter.classType}
-            />
-
-            <FilterSelector
-              arr={this.state.durationsArr}
-              filterResults={this.updateFilter3}
-              text="Duration"
-              filterValue={this.state.filter.classType}
-            />
+              <FilterSelector
+                arr={this.state.durationsArr}
+                filterResults={this.updateFilter3}
+                text="Duration"
+                filterValue={this.state.filter.classType}
+              />
+            </div>
 
             <ButtonPinkFixed //Button [ See n results ]
               text={`See ${this.state.classesArr.length} results`}
@@ -80,9 +85,9 @@ export class Classes extends Component {
         )}
 
         {
-          // Filter button
-          <div className="button-filter">
-            <button onClick={() => this.setState({ filterToolIsOn: true })}>
+          // FILTER BUTTON //////////
+          <div className="fixed-button-container">
+            <button className="filter-button" onClick={() => this.setState({ filterToolIsOn: true })}>
               Filter ({this.state.activeFilterCount})
             </button>
           </div>
@@ -90,15 +95,14 @@ export class Classes extends Component {
 
         {/* ----Body of the Classes page, the list------------------------------------------------------ */}
         <div className="header">
-          <h1>Classes</h1>
+          <h1 className="title">Classes</h1>
         </div>
         <div className="scroll-container">
-          {this.state.classesArr.map((oneClass) => (
+          {this.state.classesArr.map((oneClass, i) => (
             <Link key={oneClass._id} to={`/classes/${oneClass._id}`}>
-
               <div className="one-class">
                 <div className="profile-pic">
-                  <img src={`/img/face${Math.floor(Math.random() * Math.floor(5)+1)}.png`} alt="profile"></img>
+                  <img src={oneClass.instructor.profilepic} alt="profile"></img>
                 </div>
                 <div className="content">
                   <h3>
@@ -111,8 +115,8 @@ export class Classes extends Component {
                     )}{" "}
                     | {oneClass.classType}
                   </h3>
-                  
-                  <p>
+
+                  <p className="small-info">
                     {oneClass.instructor.username} | {oneClass.duration} min{" "}
                   </p>
                 </div>
@@ -122,7 +126,6 @@ export class Classes extends Component {
                   </div>
                 </div>
               </div>
-
             </Link>
           ))}
         </div>
@@ -131,6 +134,7 @@ export class Classes extends Component {
   }
 
   componentDidMount() {
+    
     axios
       .get(`${process.env.REACT_APP_API_URL}/api/classes`)
       .then((apiResponse) => {
@@ -139,10 +143,11 @@ export class Classes extends Component {
         this.setState({ classesArr: apiResponse.data });
         this.setState({ classesArrFloor: apiResponse.data });
         this.fillStateArrays();
+        
       })
       .catch((err) => console.log(err));
   }
-
+  
   fillStateArrays = () => {
     // set classTypesArr
     const classesTypesAll = this.state.classesArr.map((oneClass) => {
@@ -200,11 +205,11 @@ export class Classes extends Component {
   };
 
   filterResults = () => {
-    console.log("this.state.filter :>> ", this.state.filter);
+
 
     let arrayToFilter = [...this.state.classesArrFloor];
     let activeFilterCount = 0;
-    console.log("activeFilterCount :>> ", activeFilterCount);
+
 
     if (
       this.state.filter.classType !== "" &&

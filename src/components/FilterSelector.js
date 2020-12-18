@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./FilterSelector.css";
 
 class FilterSelector extends Component {
   state = {
@@ -8,12 +7,12 @@ class FilterSelector extends Component {
   };
   render() {
     return (
-      <div>
+      <div className="FilterSelector">
         <div className="selector">
           <button
             onClick={() => this.setState({ expanded: !this.state.expanded })}
           >
-            {this.props.text} {this.state.selectedValue}
+            {this.props.text} <span className="selected-value">{`${this.state.selectedValue}`}</span>
           </button>
         </div>
 
