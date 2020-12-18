@@ -91,3 +91,20 @@ button:focus {
   width: 100vw;
   height: 60vh;
 }
+
+
+.faker-class {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  align-items: center;
+
+}
+
+.faker-class img {
+  width: 100vw;
+
+}

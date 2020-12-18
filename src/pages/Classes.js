@@ -24,11 +24,13 @@ export class Classes extends Component {
       duration: "",
     },
     activeFilterCount: 0,
+    
   };
 
   render() {
     return (
       <div>
+        
         {/* -----------------Filter tool overlay --------------------------------- */}
         {this.state.filterToolIsOn && (
           <div className="filter-tool">
@@ -132,6 +134,7 @@ export class Classes extends Component {
   }
 
   componentDidMount() {
+    
     axios
       .get(`${process.env.REACT_APP_API_URL}/api/classes`)
       .then((apiResponse) => {
@@ -140,10 +143,11 @@ export class Classes extends Component {
         this.setState({ classesArr: apiResponse.data });
         this.setState({ classesArrFloor: apiResponse.data });
         this.fillStateArrays();
+        
       })
       .catch((err) => console.log(err));
   }
-
+  
   fillStateArrays = () => {
     // set classTypesArr
     const classesTypesAll = this.state.classesArr.map((oneClass) => {

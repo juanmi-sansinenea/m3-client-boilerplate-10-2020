@@ -20,11 +20,19 @@ export class ClassDetail extends Component {
     commentBody: "",
     commentId: "",
     crudMode: "",
+    fakerClass: true,
   };
 
   render() {
     return (
       <div className="scroll-container-detail">
+      {/* -----------------Faker class ----------------------------------------- */}
+      {this.state.fakerClass ? (
+          <div className="faker-class">
+            <img src="/img/home-yoga.jpg" alt="classtime"/>
+          </div>
+        ) : null
+        }
         <Link className="close-x" to={"/classes"}>
           <img src="/img/clsx.svg" alt="close-panel" />
         </Link>
@@ -167,6 +175,10 @@ export class ClassDetail extends Component {
   componentDidMount() {
     this.getClassDetails();
     this.loadTargetedMessage();
+    this.startFakerClass();
+  }
+  startFakerClass = () => {
+    setTimeout(()=>{this.setState({fakerClass: false})}, 4000)
   }
   getClassDetails = () => {
     const { class_id } = this.props.match.params;
