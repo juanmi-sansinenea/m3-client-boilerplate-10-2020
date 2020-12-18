@@ -1,16 +1,21 @@
 @import "./../App.scss";
 
+body {
+  background-color: var(--darkest);
+}
+
 .title {
   color: var(--lighter-grey);
 }
 .one-class {
   background-color: var(--dark-grey);
-  margin-bottom: 1px;
   height: 90px;
   width: 100vw;
   display: flex;
   align-items: center;
-  color: var(--lighter-grey)
+  border-bottom:  2px solid var(--darkest);
+  color: var(--lighter-grey);
+  
 }
 .one-class div {
   margin-left: 16px;

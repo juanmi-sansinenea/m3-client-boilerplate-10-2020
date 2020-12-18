@@ -3,7 +3,13 @@
 body {
  background-color: var(--lighter-grey);
  color: var(--dark-grey);
- min-height: 100vh;
+}
+.bg {
+  background-color: (--lighter-grey);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: -10;
 }
 
 .portrait-container {
@@ -38,10 +44,39 @@ body {
 .medium-text {
   font-weight: 500;
   font-size: 21px;
+  line-height: 28px;
   margin-left: 25px;
-  color: var(--dark-grey);
+  color: var(--middle-grey);
   width: 80vw;
 }
+
+.small-comment {
+  font-weight: 500;
+  line-height: 21px;
+  margin-left: 25px;
+  color: var(--middle-grey);
+  width: 80vw;
+}
+
+a, a:visited {
+  color: var(--middle-grey);
+  text-decoration: none;
+}
+button:focus {
+  outline: 0;
+}
+.pinklink {
+  color: var(--highlight);
+}
+.actions {
+  border: none;
+  background-color: var(--lightest-grey);
+}
+
+
+
+
+
 
 /* Just like filter-tool in classes, refactor */
 .comment-tool {

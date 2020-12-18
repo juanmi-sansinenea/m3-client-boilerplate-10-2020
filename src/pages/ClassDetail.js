@@ -6,7 +6,6 @@ import "./ClassDetail.scss";
 import { Link } from "react-router-dom";
 import { withAuth } from "./../context/auth-context";
 
-
 export class ClassDetail extends Component {
   state = {
     classType: "",
@@ -22,12 +21,12 @@ export class ClassDetail extends Component {
     commentId: "",
     crudMode: "",
   };
-  
+
   render() {
     return (
-      <div>
+      <div className="scroll-container-detail">
         <Link className="close-x" to={"/classes"}>
-          X
+          <img src="/img/clsx.svg" alt="close-panel" />
         </Link>
         {/*--------------------Open Comment tool Modal---------------------------------*/}
         {this.state.commentToolIsOn && (
@@ -56,24 +55,19 @@ export class ClassDetail extends Component {
                 ></textarea>
 
                 <button onClick={this.handleFormSubmit}>Post comment</button>
-
-                {/* <ButtonPinkFixed
-                  text="Post comment"
-                  handleClick={this.handleFormSubmit}
-                /> */}
               </form>
             </div>
           </div>
         )}
         {/*-------Body of the Class Details Summary ----------------------------------------------------------*/}
         <h2 className="pink-h2">
-          {this.humanizeDayMini( new Date (this.state.scheduled).getDay()) },{" "}
-          {this.addZeroBefore( new Date (this.state.scheduled).getDate()) }
+          {this.humanizeDayMini(new Date(this.state.scheduled).getDay())},{" "}
+          {this.addZeroBefore(new Date(this.state.scheduled).getDate())}
           <br />
-          {this.addZeroBefore(new Date (this.state.scheduled).getHours())}:
-          {this.addZeroBefore(new Date (this.state.scheduled).getMinutes())}h
+          {this.addZeroBefore(new Date(this.state.scheduled).getHours())}:
+          {this.addZeroBefore(new Date(this.state.scheduled).getMinutes())}h
         </h2>
-        
+
         <div className="portrait-container">
           <img
             src={this.state.profilepic}
@@ -81,62 +75,79 @@ export class ClassDetail extends Component {
             className="portrait"
           />
         </div>
-        <h2 className="duration-and-type">{`${this.state.duration} min ${this.state.classType}`} </h2>
+        <h2 className="duration-and-type">
+          {`${this.state.duration} min ${this.state.classType}`}{" "}
+        </h2>
         <p className="small-caps">{this.state.instructorName} </p>
-        <div style={{height:"40px"}}></div>
-    
+        <div style={{ height: "40px" }}></div>
 
         <p className="medium-text">{this.state.targetedMessage} </p>
         <br></br>
         <br></br>
         {/* ------List of Comments --------------------------------------------------------------- */}
-        {this.state.comments.map((oneComment, i) => (
-          <div key={oneComment._id}>
-            <Link to={`/comment/${oneComment._id}`}>
-              <p>
-                {oneComment.author.username} | {this.state.commentTimeDiffs[i]}
-              </p>
-              <p>{oneComment.commentBody}</p>
-              <p>view x replies</p>
-              <br />
-            </Link>
-            {/*------Edit and delete buttons (avail. only for 'me')--------------*/}
-            {this.props.user._id === oneComment.author._id ? (
-              <div>
-                <button // pencil
-                  onClick={() => {
-                    this.setState({
-                      crudMode: "U", //UPDATE
-                      commentBody: oneComment.commentBody,
-                      commentId: oneComment._id,
-                      commentToolIsOn: true,
-                    });
-                  }}
-                >
-                  <img src="/img/edit.svg" alt="edit" />
-                </button>
-                <button // x for deleting
-                  onClick={() => {
-                    // DELETE
-                    axios
-                      .delete(
-                        `${process.env.REACT_APP_API_URL}/api/comments/${oneComment._id}`,
-                        { withCredentials: true }
-                      )
-                      .then(() => {
-                        this.getClassDetails(); // refresh the state with new data from the DB
-                      })
-                      .catch((error) => console.log(error));
-                  }}
-                >
-                  <img src="/img/delete.svg" alt="delete" />
-                </button>
-                
+        <div >
+          {this.state.comments.map((oneComment, i) => (
+            <div
+              className="small-comment"
+              key={oneComment._id}
+              style={{ color: "#333" }}
+            >
+              <div className="comment-card">
+                <div className="profile-pic">
+                  <img src={oneComment.author.profilepic} alt="profile"></img>
+                </div>
+                <div>
+                  <Link to={`/comment/${oneComment._id}`}>
+                    <p style={{ color: "#333", fontWeight: "bold" }}>
+                      {oneComment.author.username} |{" "}
+                      {this.state.commentTimeDiffs[i]}
+                    </p>
+                    <p>{oneComment.commentBody}</p>
+                    <p className="pinklink">view x replies</p>
+                    <br />
+                  </Link>
+                  {/*------Edit and delete buttons (avail. only for 'me')--------------*/}
+                  {this.props.user._id === oneComment.author._id ? (
+                    <div>
+                      <button
+                        className="actions" // pencil
+                        onClick={() => {
+                          this.setState({
+                            crudMode: "U", //UPDATE
+                            commentBody: oneComment.commentBody,
+                            commentId: oneComment._id,
+                            commentToolIsOn: true,
+                          });
+                        }}
+                      >
+                        <img src="/img/edit.svg" alt="edit" />
+                      </button>
+                      <button
+                        className="actions" // x for deleting
+                        onClick={() => {
+                          // DELETE
+                          axios
+                            .delete(
+                              `${process.env.REACT_APP_API_URL}/api/comments/${oneComment._id}`,
+                              { withCredentials: true }
+                            )
+                            .then(() => {
+                              this.getClassDetails(); // refresh the state with new data from the DB
+                            })
+                            .catch((error) => console.log(error));
+                        }}
+                      >
+                        <img src="/img/delete.svg" alt="delete" />
+                      </button>
+                      <div style={{ height: "40px" }}></div>
+                    </div>
+                  ) : null}
+                </div>
               </div>
-            ) : null}
-            
-          </div>
-        ))}
+            </div>
+          ))}
+          
+        </div>
 
         <ButtonPinkFixed
           text="Add comment"
@@ -148,6 +159,8 @@ export class ClassDetail extends Component {
             });
           }}
         />
+        <div style={{ height: "240px" }}></div>
+        <div className="bg"></div>
       </div>
     );
   }
