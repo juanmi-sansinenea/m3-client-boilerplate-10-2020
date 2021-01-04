@@ -66,14 +66,14 @@ export class Classes extends Component {
                 arr={this.state.instructorsArr}
                 filterResults={this.updateFilter2}
                 text="Instructor"
-                filterValue={this.state.filter.classType}
+                filterValue={this.state.filter.instructor}
               />
 
               <FilterSelector
                 arr={this.state.durationsArr}
                 filterResults={this.updateFilter3}
                 text="Duration"
-                filterValue={this.state.filter.classType}
+                filterValue={this.state.filter.duration}
               />
             </div>
 
